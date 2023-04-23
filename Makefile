@@ -15,7 +15,7 @@ compile: src/ICP-pacman.pro
 	qmake src/ICP-pacman.pro -o src/build/Makefile
 
 
-run:
+run: all
 	src/build/ICP-pacman
 
 
