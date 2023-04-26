@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     View/gamepage.cpp \
+    Controller/gamecontroller.cpp \
     main.cpp \
     View/mainwindow.cpp \
     View/replaypage.cpp
@@ -17,7 +18,8 @@ SOURCES += \
 HEADERS += \
     View/gamepage.h \
     View/mainwindow.h \
-    View/replaypage.h
+    View/replaypage.h \
+    Controller/gamecontroller.h
 
 FORMS += \
     View/gamepage.ui \

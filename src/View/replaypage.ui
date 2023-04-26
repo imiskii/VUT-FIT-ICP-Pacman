@@ -42,7 +42,7 @@
           <number>220</number>
          </property>
          <item>
-          <widget class="QPushButton" name="PlayButton">
+          <widget class="QPushButton" name="ReplayButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -112,7 +112,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="BackButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
