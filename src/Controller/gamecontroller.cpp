@@ -1,12 +1,14 @@
 #include "gamecontroller.h"
 
 
-GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *GameView, replaypage *ReplayView)
+GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *GameView, replaypage *ReplayView, GameModel *GameM, ReplayModel *ReplayM)
     : QObject{parent}
 {
     this->_MainView = MainView;
     this->_GameView = GameView;
     this->_ReplayView = ReplayView;
+    this->_GameM = GameM;
+    this->_ReplayM = ReplayM;
 
     connect(this->_MainView, &MainWindow::NotifyUserAction, this, &GameController::MVHandleAction);
     connect(this->_GameView, &gamepage::NotifyUserAction, this, &GameController::GVHandleAction);
