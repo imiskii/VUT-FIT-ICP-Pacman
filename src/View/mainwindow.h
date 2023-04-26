@@ -49,8 +49,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    gamepage *_GamePage;
-    replaypage *_ReplayPage;
+    gamepage *_GamePage;        //< Game Page
+    replaypage *_ReplayPage;    //< Replay Page
 
 
 signals:
@@ -74,10 +74,18 @@ public slots:
     void QuitApp();
 
 private slots:
+    /**
+     * @brief on_QuitButton_clicked sends signal to Controller that 'Quit' button was clicked
+     */
     void on_QuitButton_clicked();
+    /**
+     * @brief on_PlayGameButton_clicked sends signal to Controller that 'Play Game' button was clicked
+     */
     void on_PlayGameButton_clicked();
+    /**
+     * @brief on_ReplayGameButton_clicked sends signal to Controller that 'Replay Game' button was clicked
+     */
     void on_ReplayGameButton_clicked();
-
     /**
      * @brief MoveOnHomePage Change current page of application to Home page
      */

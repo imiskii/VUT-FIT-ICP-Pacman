@@ -10,6 +10,8 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
     this->_GameM = GameM;
     this->_ReplayM = ReplayM;
 
+    /* View Connections */
+
     connect(this->_MainView, &MainWindow::NotifyUserAction, this, &GameController::MVHandleAction);
     connect(this->_GameView, &gamepage::NotifyUserAction, this, &GameController::GVHandleAction);
     connect(this->_ReplayView, &replaypage::NotifyUserAction, this, &GameController::RVHandleAction);
@@ -20,6 +22,11 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
     connect(this, &GameController::ChangeGVPage, this->_GameView, &gamepage::MoveOnPage);
 
     connect(this, &GameController::ChangeRVPage, this->_ReplayView, &replaypage::MoveOnPage);
+
+    /* Model Connections */
+
+    connect(this, &GameController::ChooseMapFile, this->_GameM, &GameModel::SelectMapFile);
+    connect(this, &GameController::ChooseReplayFile, this->_ReplayM, &ReplayModel::SelectReplayFile);
 }
 
 
@@ -54,13 +61,16 @@ void GameController::GVHandleAction(GVActionCode code)
         emit ChangeGVPage(GVPageCode::PLAY_GAME);
         break;
     case GVActionCode::CLICKED_BUTTON_EXIT:
-        emit ChangeGVPage(GVPageCode::GAME_EXIT);
+        emit ChangeGVPage(GVPageCode::GAME_LOBBY);
         break;
     case GVActionCode::CLICKED_BUTTON_CONTINUE:
-        emit ChangeGVPage(GVPageCode::GAME_EXIT);
+        emit ChangeGVPage(GVPageCode::GAME_LOBBY);
         break;
     case GVActionCode::CLICKED_BUTTON_BACK:
         emit ChangeGVPage(GVPageCode::HOME);
+        break;
+    case GVActionCode::CLICKED_BUTTON_CHOOSEMAP:
+        emit ChooseMapFile();
         break;
     default:
         break;
@@ -75,10 +85,13 @@ void GameController::RVHandleAction(RVActionCode code)
         emit ChangeRVPage(RVPageCode::REPLAY_GAME);
         break;
     case RVActionCode::CLICKED_BUTTON_EXIT:
-        emit ChangeRVPage(RVPageCode::REPLAY_EXIT);
+        emit ChangeRVPage(RVPageCode::REPLAY_LOBBY);
         break;
     case RVActionCode::CLICKED_BUTTON_BACK:
         emit ChangeRVPage(RVPageCode::HOME);
+        break;
+    case RVActionCode::CLICKED_BUTTON_CHOOSEREPLAY:
+        emit ChooseReplayFile();
         break;
     default:
         break;

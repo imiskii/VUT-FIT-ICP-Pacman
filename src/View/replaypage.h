@@ -16,9 +16,9 @@
  */
 enum class RVPageCode
 {
-    HOME,
-    REPLAY_GAME,
-    REPLAY_EXIT
+    HOME,           //< Home page
+    REPLAY_GAME,    //< Replay page
+    REPLAY_LOBBY    //< before replay lobby page
 };
 
 
@@ -27,9 +27,10 @@ enum class RVPageCode
  */
 enum class RVActionCode
 {
-    CLICKED_BUTTON_BACK,
-    CLICKED_BUTTON_REPLAYGAME,
-    CLICKED_BUTTON_EXIT
+    CLICKED_BUTTON_BACK,        //< Back button
+    CLICKED_BUTTON_REPLAYGAME,  //< Replay button
+    CLICKED_BUTTON_EXIT,        //< Exit button
+    CLICKED_BUTTON_CHOOSEREPLAY //< Choose Replay button
 };
 
 
@@ -67,12 +68,30 @@ public slots:
      * @param page code of the page where apllication should move
      */
     void MoveOnPage(RVPageCode page);
+    /**
+     * @brief AddReplayName add new replay name to combobox
+     * @param replayName name of new replay
+     */
+    void AddReplayName(QString replayName);
 
 
 private slots:
+    /**
+     * @brief on_ReplayExitButton_clicked sends signal to Controller that 'Exit' button was clicked
+     */
     void on_ReplayExitButton_clicked();
+    /**
+     * @brief on_ReplayButton_clicked sends signal to Controller that 'Replay' button was clicked
+     */
     void on_ReplayButton_clicked();
+    /**
+     * @brief on_BackButton_clicked sends signal to Controller that 'Back' button was clicked
+     */
     void on_BackButton_clicked();
+    /**
+     * @brief on_ChooseReplayFileButton_clicked sends signal to Controller that 'Choose Replay' button was clicked
+     */
+    void on_ChooseReplayFileButton_clicked();
 };
 
 #endif // REPLAYPAGE_H

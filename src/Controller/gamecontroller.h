@@ -19,24 +19,59 @@ public:
 
 
 private:
-    MainWindow *_MainView;
-    gamepage *_GameView;
-    replaypage *_ReplayView;
-    GameModel *_GameM;
-    ReplayModel *_ReplayM;
+    MainWindow *_MainView;      //< pointer to Main View
+    gamepage *_GameView;        //< pointer to Game View
+    replaypage *_ReplayView;    //< pointer to Replay View
+    GameModel *_GameM;          //< pointer to Game Model
+    ReplayModel *_ReplayM;      //< pointer to Replay Model
 
 
 signals:
+    /**
+     * @brief ChangeMVPage notify Main View to change page
+     * @param page page to change to
+     */
     void ChangeMVPage(MVPageCode page);
+    /**
+     * @brief ChangeGVPage notify Game View to change page
+     * @param page to change to
+     */
     void ChangeGVPage(GVPageCode page);
+    /**
+     * @brief ChangeRVPage notify Replay View to change page
+     * @param page to change to
+     */
     void ChangeRVPage(RVPageCode page);
+    /**
+     * @brief QuitApp notify Main View to close the application
+     */
     void QuitApp();
+    /**
+     * @brief ChooseMapFile notify Game Model to choose the map file
+     */
+    void ChooseMapFile();
+    /**
+     * @brief ChooseReplayFile notify Replay Model to choose the replay file
+     */
+    void ChooseReplayFile();
 
 
 
 public slots:
+    /**
+     * @brief MVHandleAction handeling actions for Main View
+     * @param code code of action
+     */
     void MVHandleAction(MVActionCode code);
+    /**
+     * @brief GVHandleAction handeling actions for Game View
+     * @param code
+     */
     void GVHandleAction(GVActionCode code);
+    /**
+     * @brief RVHandleAction handeling actions for Replay View
+     * @param code
+     */
     void RVHandleAction(RVActionCode code);
 };
 

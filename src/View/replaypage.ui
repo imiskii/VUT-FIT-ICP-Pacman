@@ -33,13 +33,13 @@
           <number>120</number>
          </property>
          <property name="topMargin">
-          <number>90</number>
+          <number>100</number>
          </property>
          <property name="rightMargin">
           <number>120</number>
          </property>
          <property name="bottomMargin">
-          <number>220</number>
+          <number>210</number>
          </property>
          <item>
           <widget class="QPushButton" name="ReplayButton">
@@ -72,7 +72,7 @@
             <number>10</number>
            </property>
            <item>
-            <widget class="QComboBox" name="comboBox">
+            <widget class="QComboBox" name="ReplayComboBox">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -91,7 +91,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="ChooseFileButton">
+            <widget class="QPushButton" name="ChooseReplayFileButton">
              <property name="enabled">
               <bool>true</bool>
              </property>
@@ -105,7 +105,7 @@
               <string notr="true">background: #355070; </string>
              </property>
              <property name="text">
-              <string>Choose File</string>
+              <string>Choose Replay</string>
              </property>
             </widget>
            </item>
@@ -124,6 +124,25 @@
            </property>
            <property name="text">
             <string>Back</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="MessageLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: red;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>

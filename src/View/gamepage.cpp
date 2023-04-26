@@ -32,12 +32,19 @@ void gamepage::MoveOnPage(GVPageCode page)
         emit GoOnHomePage();
         break;
     case GVPageCode::GAME_END:
-    case GVPageCode::GAME_EXIT:
+    case GVPageCode::GAME_LOBBY:
         ui->stackedWidget->setCurrentIndex(0);
         break;
     default:
         break;
     }
+}
+
+
+void gamepage::AddMapName(QString mapName)
+{
+    ui->MapComboBox->addItem(mapName);
+    ui->MapComboBox->setCurrentText(mapName);
 }
 
 
@@ -62,5 +69,11 @@ void gamepage::on_GameExitButton_clicked()
 void gamepage::on_EndContinueButton_clicked()
 {
     emit NotifyUserAction(GVActionCode::CLICKED_BUTTON_CONTINUE);
+}
+
+
+void gamepage::on_ChooseMapFileButton_clicked()
+{
+    emit NotifyUserAction(GVActionCode::CLICKED_BUTTON_CHOOSEMAP);
 }
 

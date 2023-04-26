@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Model/FileLoader.cpp \
     Model/GameModel.cpp \
     Model/ReplayModel.cpp \
     View/gamepage.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
     View/replaypage.cpp
 
 HEADERS += \
+    Model/FileLoader.h \
     Model/GameModel.h \
     Model/ReplayModel.h \
     View/gamepage.h \

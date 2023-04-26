@@ -31,12 +31,18 @@ void replaypage::MoveOnPage(RVPageCode page)
     case RVPageCode::HOME:
         emit GoOnHomePage();
         break;
-    case RVPageCode::REPLAY_EXIT:
+    case RVPageCode::REPLAY_LOBBY:
         ui->stackedWidget->setCurrentIndex(0);
         break;
     default:
         break;
     }
+}
+
+void replaypage::AddReplayName(QString replayName)
+{
+    ui->ReplayComboBox->addItem(replayName);
+    ui->ReplayComboBox->setCurrentText(replayName);
 }
 
 
@@ -55,5 +61,11 @@ void replaypage::on_ReplayExitButton_clicked()
 void replaypage::on_BackButton_clicked()
 {
     emit NotifyUserAction(RVActionCode::CLICKED_BUTTON_BACK);
+}
+
+
+void replaypage::on_ChooseReplayFileButton_clicked()
+{
+    emit NotifyUserAction(RVActionCode::CLICKED_BUTTON_CHOOSEREPLAY);
 }
 
