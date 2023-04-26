@@ -16,7 +16,7 @@ compile: src/ICP-pacman.pro
 
 
 run: all
-	src/build/ICP-pacman
+	cd src/build && ./ICP-pacman
 
 
 clean:
