@@ -9,14 +9,15 @@
 #define FILELOADER_H
 
 
-using namespace std;
-
 #include <iostream>
 #include <vector>
 #include <string>
 #include <cstring>
 #include <filesystem>
+#include <fstream>
 
+
+using namespace std;
 
 /**
  * @brief LoadFileNamesFromDir Lead file names from given directory that have given file extension
@@ -25,6 +26,15 @@ using namespace std;
  * @return vector of strings with file names that have given file extension
  */
 vector<string> LoadFileNamesFromDir(const char *dirPath, const char *fileExt);
+
+
+/**
+ * @brief ReadLinesFromFile Function read lines from given file
+ * @param fileLines reference to vector where lines will be read
+ * @param path path to file from which lines will be read
+ * @return True if reading was successful else return False
+ */
+bool ReadLinesFromFile(vector<string> &fileLines, const char *path);
 
 
 #endif // FILELOADER_H

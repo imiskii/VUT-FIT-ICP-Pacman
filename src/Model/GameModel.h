@@ -12,6 +12,8 @@
 #include <QFileDialog>
 #include "../View/gamepage.h"
 #include "FileLoader.h"
+#include "GameMap.h"
+#include "Pacman.h"
 
 class GameModel : public QObject
 {
@@ -24,6 +26,8 @@ public:
 
 private:
     gamepage *_GameView; //< Game View
+    GameMap _Map;         //< Game map/field
+    Pacman _Pacman;       //< object representing pacman
 
 
 signals:
@@ -32,6 +36,21 @@ signals:
      * @param mapFile name of map
      */
     void AddMapNameToCombobox(QString mapFile);
+    /**
+     * @brief DisplayMap notify View to display game field
+     * @param gameField 2D array - representation of game field
+     */
+    void DisplayMap(std::vector<std::vector<char>> &gameField);
+    /**
+     * @brief DisplayMessage notify view to display message
+     * @param msg Message to be displayed
+     */
+    void DisplayMessage(QString msg);
+    /**
+     * @brief DisplayPage notify Game View to change page
+     * @param page to change to
+     */
+    void ChangePage(GVPageCode page);
 
 
 public slots:
@@ -39,6 +58,11 @@ public slots:
      * @brief SelectMapFile open File Dialog to choose map file and notify view to display it
      */
     void SelectMapFile();
+    /**
+     * @brief BuildMap Load given map and notify View to display it
+     * @param map map to be loaded
+     */
+    void BuildMap(QString map);
 
 };
 

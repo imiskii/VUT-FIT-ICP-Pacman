@@ -8,6 +8,11 @@
 #define GAMEPAGE_H
 
 #include <QWidget>
+#include <QGraphicsScene>
+#include <QGraphicsAnchor>
+#include <QResizeEvent>
+#include "ui_gamepage.h"
+
 
 
 /**
@@ -27,9 +32,9 @@ enum class GVPageCode
  */
 enum class GVActionCode
 {
-    CLICKED_BUTTON_BACK,        //< Back button
+    CLICKED_BUTTON_BACK,        //< Back button
     CLICKED_BUTTON_PLAYGAME,    //< PLAY button
-    CLICKED_BUTTON_EXIT,        //< Exit button
+    CLICKED_BUTTON_EXIT,        //< Exit button
     CLICKED_BUTTON_CONTINUE,    //< Continue button
     CLICKED_BUTTON_CHOOSEMAP    //< Choose Map button
 };
@@ -49,10 +54,16 @@ public:
 
 
 private:
-    Ui::gamepage *ui; //< GamePage UI
+    Ui::gamepage *ui;       //< GamePage UI
+    QGraphicsScene *_scene; //< Game scene
 
 
 signals:
+    /**
+     * @brief PlayButtonClicked Notify controller that player want to play a game
+     * @param choosenMap name of map selected by user
+     */
+    void PlayButtonClicked(QString choosenMap);
     /**
      * @brief NotifyUserAction Notify controller about acctions in GameView
      * @param code code of action
@@ -75,6 +86,16 @@ public slots:
      * @param mapFile name of new map
      */
     void AddMapName(QString mapName);
+    /**
+     * @brief ShowGameField Create new game field and add it to scene
+     * @param gameField 2D array representing game field
+     */
+    void ShowGameField(std::vector<std::vector<char>> &gameField);
+    /**
+     * @brief ShowMessage Show message in game lobby
+     * @param msg Message that will be displayed
+     */
+    void ShowMessage(QString msg);
 
 
 private slots:
@@ -98,6 +119,8 @@ private slots:
      * @brief on_ChooseMapFileButton_clicked sends signal to Controller that 'Choose Map' button was clicked
      */
     void on_ChooseMapFileButton_clicked();
+
 };
+
 
 #endif // GAMEPAGE_H

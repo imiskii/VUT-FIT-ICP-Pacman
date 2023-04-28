@@ -14,6 +14,7 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
 
     connect(this->_MainView, &MainWindow::NotifyUserAction, this, &GameController::MVHandleAction);
     connect(this->_GameView, &gamepage::NotifyUserAction, this, &GameController::GVHandleAction);
+    connect(this->_GameView, &gamepage::PlayButtonClicked, this, &GameController::PlayButtonAction);
     connect(this->_ReplayView, &replaypage::NotifyUserAction, this, &GameController::RVHandleAction);
 
     connect(this, &GameController::ChangeMVPage, this->_MainView, &MainWindow::MoveOnPage);
@@ -26,6 +27,7 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
     /* Model Connections */
 
     connect(this, &GameController::ChooseMapFile, this->_GameM, &GameModel::SelectMapFile);
+    connect(this, &GameController::StartGame, this->_GameM, &GameModel::BuildMap);
     connect(this, &GameController::ChooseReplayFile, this->_ReplayM, &ReplayModel::SelectReplayFile);
 }
 
@@ -57,12 +59,7 @@ void GameController::MVHandleAction(MVActionCode code)
 void GameController::GVHandleAction(GVActionCode code)
 {
     switch (code) {
-    case GVActionCode::CLICKED_BUTTON_PLAYGAME:
-        emit ChangeGVPage(GVPageCode::PLAY_GAME);
-        break;
     case GVActionCode::CLICKED_BUTTON_EXIT:
-        emit ChangeGVPage(GVPageCode::GAME_LOBBY);
-        break;
     case GVActionCode::CLICKED_BUTTON_CONTINUE:
         emit ChangeGVPage(GVPageCode::GAME_LOBBY);
         break;
@@ -96,6 +93,12 @@ void GameController::RVHandleAction(RVActionCode code)
     default:
         break;
     }
+}
+
+
+void GameController::PlayButtonAction(QString choosenMap)
+{
+    emit StartGame(choosenMap);
 }
 
 

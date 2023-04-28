@@ -54,25 +54,35 @@ signals:
      * @brief ChooseReplayFile notify Replay Model to choose the replay file
      */
     void ChooseReplayFile();
+    /**
+     * @brief StartGame notify model to strat a new game
+     * @param map map to be played
+     */
+    void StartGame(QString map);
 
 
 
 public slots:
     /**
-     * @brief MVHandleAction handeling actions for Main View
+     * @brief MVHandleAction handling actions for Main View
      * @param code code of action
      */
     void MVHandleAction(MVActionCode code);
     /**
-     * @brief GVHandleAction handeling actions for Game View
+     * @brief GVHandleAction handling actions for Game View
      * @param code
      */
     void GVHandleAction(GVActionCode code);
     /**
-     * @brief RVHandleAction handeling actions for Replay View
+     * @brief RVHandleAction handling actions for Replay View
      * @param code
      */
     void RVHandleAction(RVActionCode code);
+    /**
+     * @brief PlayButtonAction handling signal to play the game
+     * @param choosenMap map choosen by user
+     */
+    void PlayButtonAction(QString choosenMap);
 };
 
 #endif // GAMECONTROLLER_H

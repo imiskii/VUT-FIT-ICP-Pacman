@@ -32,3 +32,25 @@ vector<string> LoadFileNamesFromDir(const char *dirPath, const char *fileExt)
     }
     return files;
 }
+
+
+bool ReadLinesFromFile(vector<string> &fileLines, const char *path)
+{
+    std::ifstream file(path); // Open File
+    std::string line;
+
+    if (file.is_open()) // Check if file has oppened sucessfully
+    {
+        while (std::getline(file, line)) // read lines
+        {
+            fileLines.push_back(line);
+        }
+        file.close(); // Close file
+    }
+    else // unable to open file
+    {
+        return false;
+    }
+
+    return true;
+}
