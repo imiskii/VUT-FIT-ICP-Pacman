@@ -12,7 +12,6 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include "FileLoader.h"
 
 using namespace std;
 
@@ -24,10 +23,10 @@ public:
     ~GameMap();
     /**
      * @brief loadMap load and process game map
-     * @param path path to file with map
-     * @return True if map was successfuly loaded or False if map file is missing/corrupted
+     * @param fileLines reference to vector with loaded lines from map file
+     * @return True if map was successfuly loaded or False if map file is corrupted
      */
-    bool loadMap(const char *path);
+    bool loadMap(vector<string> &fileLines);
     /**
      * @brief getCols getter for count of map field columns
      * @return number of map columns

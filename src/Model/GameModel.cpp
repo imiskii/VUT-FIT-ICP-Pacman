@@ -46,23 +46,26 @@ void GameModel::SelectMapFile()
 
 void GameModel::BuildMap(QString map)
 {
-    // @TODO: Load map
-    // @TODO: emit signal to View to display it or emit signal that there is a problem
-
     if (!map.contains("/")) // it is not full path
     {
         map = "../../examples/maps/" + map + ".txt";
     }
 
-    if (!this->_Map.loadMap(map.toLocal8Bit().constData()))
+    std::vector<std::string> fileLines;
+    // Read lines from map file
+    if (!ReadLinesFromFile(fileLines, map.toLocal8Bit().constData())) // reading operation failed
+    {
+        emit DisplayMessage("Unable to find given map file !");
+        return;
+    }
+
+    if (!this->_Map.loadMap(fileLines))
     {
         emit DisplayMessage("The map file is corrupted !");
         return;
     }
 
-    std::vector<std::vector<char>> mapField = this->_Map.getMapField();
-
-    emit DisplayMap(mapField);
+    emit DisplayMap(this->_Map.getMapField());
     emit ChangePage(GVPageCode::PLAY_GAME);
 
 }

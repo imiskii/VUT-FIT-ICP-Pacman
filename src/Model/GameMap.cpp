@@ -24,14 +24,8 @@ GameMap::~GameMap()
 }
 
 
-bool GameMap::loadMap(const char *path)
+bool GameMap::loadMap(vector<string> &fileLines)
 {
-    vector<string> fileLines;
-    // Read lines from map file
-    if (!ReadLinesFromFile(fileLines, path)) // reading operation failed
-    {
-        return false;
-    }
     // check empty file
     if (fileLines.size() == 0) // file has 0 lines, so file is empty
     {
@@ -67,6 +61,10 @@ bool GameMap::loadMap(const char *path)
         {
             char c;
             iss >> c;
+            if (!(c == '.' || c == 'T' || c == 'X' || c == 'G' || c == 'K' || c == 'S')) // Ak sa symbol nerovná ./T/S/X/K/G
+            {
+                return false;
+            }
             line.push_back(c);
         }
         this->_field.push_back(line); // put new line to 2D array - _field
