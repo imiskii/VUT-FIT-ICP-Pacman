@@ -19,6 +19,7 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     connect(this, &GameModel::DisplayMap, this->_GameView, &gamepage::ShowGameField);
     connect(this, &GameModel::DisplayMessage, this->_GameView, &gamepage::ShowMessage);
     connect(this, &GameModel::ChangePage, this->_GameView, &gamepage::MoveOnPage);
+    connect(this, &GameModel::ChangePacmanPosition, this->_GameView, &gamepage::UpdatePacmanPosition);
 
     // Load map names
     for (auto& item : LoadFileNamesFromDir("../../examples/maps", "txt"))
@@ -68,4 +69,10 @@ void GameModel::BuildMap(QString map)
     emit DisplayMap(this->_Map.getMapField());
     emit ChangePage(GVPageCode::PLAY_GAME);
 
+}
+
+
+void GameModel::MovePacman(direction dr)
+{
+    emit ChangePacmanPosition(dr);
 }

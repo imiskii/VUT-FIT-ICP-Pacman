@@ -4,7 +4,7 @@
 # Date: 23.04.2023
 #
 
-TOPACK=Makefile README.txt doc examples src/build src/Controller src/Model src/View src/ICP-pacman.pro src/main.cpp
+TOPACK=Makefile README.txt doc examples src/build src/Controller src/Model src/View src/ICP-pacman.pro src/main.cpp src/consts.h
 
 
 all: compile

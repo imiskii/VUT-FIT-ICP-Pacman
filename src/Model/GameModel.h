@@ -51,6 +51,11 @@ signals:
      * @param page to change to
      */
     void ChangePage(GVPageCode page);
+    /**
+     * @brief ChangePacmanPosition notify Game View to change pacman position on map
+     * @param dr direction where should pacman move
+     */
+    void ChangePacmanPosition(direction dr);
 
 
 public slots:
@@ -63,6 +68,11 @@ public slots:
      * @param map map to be loaded
      */
     void BuildMap(QString map);
+    /**
+     * @brief MovePacman move pacman object to given direction
+     * @param dr direction where should pacman move
+     */
+    void MovePacman(direction dr);
 
 };
 

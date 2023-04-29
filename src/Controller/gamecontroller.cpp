@@ -10,6 +10,8 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
     this->_GameM = GameM;
     this->_ReplayM = ReplayM;
 
+    this->_MainView->installEventFilter(this);
+
     /* View Connections */
 
     connect(this->_MainView, &MainWindow::NotifyUserAction, this, &GameController::MVHandleAction);
@@ -28,6 +30,7 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
 
     connect(this, &GameController::ChooseMapFile, this->_GameM, &GameModel::SelectMapFile);
     connect(this, &GameController::StartGame, this->_GameM, &GameModel::BuildMap);
+    connect(this, &GameController::MoveAction, this->_GameM, &GameModel::MovePacman);
     connect(this, &GameController::ChooseReplayFile, this->_ReplayM, &ReplayModel::SelectReplayFile);
 }
 
@@ -35,6 +38,43 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
 GameController::~GameController()
 {
 
+}
+
+
+bool GameController::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        this->_KeyPressEvent(keyEvent);
+    }
+    return QObject::eventFilter(obj, event);
+}
+
+
+void GameController::_KeyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_W:
+    case Qt::UpArrow:
+        emit MoveAction(direction::NORTH);
+        break;
+    case Qt::Key_A:
+    case Qt::LeftArrow:
+        emit MoveAction(direction::WEST);
+        break;
+    case Qt::Key_S:
+    case Qt::DownArrow:
+        emit MoveAction(direction::SOUTH);
+        break;
+    case Qt::Key_D:
+    case Qt::RightArrow:
+        emit MoveAction(direction::EAST);
+        break;
+    default:
+        break;
+    }
 }
 
 

@@ -9,10 +9,9 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
-#include <QGraphicsAnchor>
-#include <QResizeEvent>
+#include <vector>
 #include "ui_gamepage.h"
-
+#include "GameItems.h"
 
 
 /**
@@ -54,8 +53,11 @@ public:
 
 
 private:
-    Ui::gamepage *ui;       //< GamePage UI
-    QGraphicsScene *_scene; //< Game scene
+    Ui::gamepage *ui;               //< GamePage UI
+    QGraphicsScene *_scene;         //< Game scene
+    PacmanItem *_pacman;            //< Pacman view object
+    std::vector<GhostItem*> _ghosts; //< Items with ghost objects
+    qreal _cellSize;                //< Size of one cell in GraphicView
 
 
 signals:
@@ -96,6 +98,11 @@ public slots:
      * @param msg Message that will be displayed
      */
     void ShowMessage(QString msg);
+    /**
+     * @brief UpdatePacmanPosition update position of pacman object on scene
+     * @param dr direction of new pacman position
+     */
+    void UpdatePacmanPosition(direction dr);
 
 
 private slots:

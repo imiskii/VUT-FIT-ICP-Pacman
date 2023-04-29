@@ -24,6 +24,11 @@ private:
     replaypage *_ReplayView;    //< pointer to Replay View
     GameModel *_GameM;          //< pointer to Game Model
     ReplayModel *_ReplayM;      //< pointer to Replay Model
+    void _KeyPressEvent(QKeyEvent *event); //< functions for handeling pressed keys
+
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 
 signals:
@@ -59,6 +64,11 @@ signals:
      * @param map map to be played
      */
     void StartGame(QString map);
+    /**
+     * @brief MoveAction notify model that key that should force move action is pressed
+     * @param dr direction of movement that should be done
+     */
+    void MoveAction(direction dr);
 
 
 

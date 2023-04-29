@@ -45,7 +45,11 @@ bool GameMap::loadMap(vector<string> &fileLines)
         return false;
     }
     // process map
-    this->_field.reserve(this->_rows); // set size to avoid resizeing
+    this->_field.reserve(this->_rows+2); // set size to avoid resizeing (+2 bcs. borders)
+    // add top border
+    vector<char> border(this->_cols+2, 'X');
+    this->_field.push_back(border);
+    // add map lines
     for (int i = 0; i < this->_rows; i++)
     {
         // check map columns
@@ -54,21 +58,49 @@ bool GameMap::loadMap(vector<string> &fileLines)
             return false;
         }
         vector<char> line; // create temporary vector
-        line.reserve(this->_cols); // set it size to avoid resizeing
+        line.reserve(this->_cols+2); // set it size to avoid resizeing (+2 bcs. borders)
         // process one line of map
         istringstream iss(fileLines.at(i+1));
         for (int j = 0; j < this->_cols; j++)
         {
+            // add left border
+            if (j == 0)
+                line.push_back('X');
+
             char c;
             iss >> c;
-            if (!(c == '.' || c == 'T' || c == 'X' || c == 'G' || c == 'K' || c == 'S')) // Ak sa symbol nerovná ./T/S/X/K/G
+
+            switch (c)
             {
-                return false;
+                case 'S':
+                    this->_StartPos = QPointF(i+1, j+1);
+                    break;
+                case 'G':
+                    this->_gostPos.push_back(QPointF(i+1, j+1));
+                    break;
+                case '.':
+                case 'X':
+                case 'K':
+                case 'T':
+                    break;
+                default:
+                    return false; // Unknow symbol
             }
+
             line.push_back(c);
+
+            // add right border
+            if (j == (this->_cols-1))
+                line.push_back('X');
         }
         this->_field.push_back(line); // put new line to 2D array - _field
     }
+    // add botton border
+    this->_field.push_back(border);
+    // count added borders
+    this->_rows += 2;
+    this->_cols += 2;
+
     return true;
 }
 

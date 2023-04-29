@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <QPoint>
 
 using namespace std;
 
@@ -45,6 +46,8 @@ public:
 
 
 private:
+    QPointF _StartPos;
+    vector<QPointF> _gostPos;
     int _rows;
     int _cols;
     vector<vector<char>> _field;

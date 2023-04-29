@@ -31,7 +31,8 @@ HEADERS += \
     View/gamepage.h \
     View/mainwindow.h \
     View/replaypage.h \
-    Controller/gamecontroller.h
+    Controller/gamecontroller.h \
+    consts.h
 
 FORMS += \
     View/gamepage.ui \
