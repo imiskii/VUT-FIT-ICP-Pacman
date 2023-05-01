@@ -12,9 +12,18 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include <QPoint>
+#include <utility>
 
 using namespace std;
+
+
+struct MapItems
+{
+    pair<int, int> startPos;
+    pair<int, int> targetPos;
+    vector<pair<int, int>> keysPos;
+    vector<pair<int, int>> ghostsPos;
+};
 
 
 class GameMap
@@ -27,7 +36,7 @@ public:
      * @param fileLines reference to vector with loaded lines from map file
      * @return True if map was successfuly loaded or False if map file is corrupted
      */
-    bool loadMap(vector<string> &fileLines);
+    bool loadMap(vector<string> &fileLines, string mapName);
     /**
      * @brief getCols getter for count of map field columns
      * @return number of map columns
@@ -40,14 +49,33 @@ public:
     int getRows() const;
     /**
      * @brief getMapField getter for map field
-     * @return reference to map field
+     * @return 2D array - map field
      */
     vector<vector<char>> &getMapField();
+    /**
+     * @brief getMapItems get positions of items in map
+     * @return structure with positions of items in map
+     */
+    MapItems getMapItems();
+    /**
+     * @brief getMapName getter for attribute mapName
+     * @return name of map that was loaded
+     */
+    string getMapName();
+    /**
+     * @brief isWall check if on given position of field is wall
+     * @param x row
+     * @param y column
+     * @return True if there is wall or False if there is something else or given position is out of map field
+     */
+    bool isWall(int x, int y);
+
+
 
 
 private:
-    QPointF _StartPos;
-    vector<QPointF> _gostPos;
+    string _mapName;
+    MapItems _itemsInMap;
     int _rows;
     int _cols;
     vector<vector<char>> _field;

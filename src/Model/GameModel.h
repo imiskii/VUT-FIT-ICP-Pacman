@@ -15,6 +15,10 @@
 #include "GameMap.h"
 #include "Pacman.h"
 
+
+using namespace std;
+
+
 class GameModel : public QObject
 {
     Q_OBJECT
@@ -25,9 +29,18 @@ public:
 
 
 private:
-    gamepage *_GameView; //< Game View
-    GameMap _Map;         //< Game map/field
-    Pacman _Pacman;       //< object representing pacman
+    gamepage *_GameView;        //< Game View
+    GameMap *_Map;              //< Game map/field
+    Pacman *_Pacman;            //< object representing pacman
+    int _PacmanSpeed;           //< pacman transition time to a new field in milliseconds
+    int _GhostsSpeed;           //< ghosts transition time to a new field in milliseconds
+    /**
+     * @brief _setNewPosition update given position (x,y) based on given direction
+     * @param dr direction
+     * @param x reference to x position
+     * @param y reference to y position
+     */
+    void _setNewPosition(direction dr, int &x, int &y);
 
 
 signals:
@@ -55,7 +68,12 @@ signals:
      * @brief ChangePacmanPosition notify Game View to change pacman position on map
      * @param dr direction where should pacman move
      */
-    void ChangePacmanPosition(direction dr);
+    void ChangePacmanPosition(direction dr, int speed);
+    /**
+     * @brief NextMove continue in next/currnet pacman movement
+     * @param dr direction where should pacman move
+     */
+    void NextMove(direction dr);
 
 
 public slots:
@@ -73,6 +91,10 @@ public slots:
      * @param dr direction where should pacman move
      */
     void MovePacman(direction dr);
+    /**
+     * @brief KeepPacmanMoving call another move signal for pacman if last pacman movement was finished
+     */
+    void KeepPacmanMoving();
 
 };
 

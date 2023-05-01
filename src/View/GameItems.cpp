@@ -64,6 +64,8 @@ PacmanItem::PacmanItem(QPointF position, qreal &width, qreal &height) : QObject(
     this->_moveAnimation->setEasingCurve(QEasingCurve::Linear);
     // rotation
     this->setTransformOriginPoint(QPointF(this->rect().center().x(), this->rect().center().y()));
+
+    connect(this->_moveAnimation, &QPropertyAnimation::finished, this, &PacmanItem::moveAnimationFinished);
 }
 
 
@@ -75,7 +77,7 @@ PacmanItem::~PacmanItem()
 }
 
 
-void PacmanItem::moveTo(QPointF destPos, int &speed, direction dr)
+void PacmanItem::moveTo(QPointF destPos, int speed, direction dr)
 {
     static int movementProgress; // store animation time that remains to complete the full pacman step
     // Change direction during movement
@@ -124,7 +126,13 @@ void PacmanItem::moveTo(QPointF destPos, int &speed, direction dr)
 }
 
 
-void PacmanItem::_mouthAnimation(int &speed)
+void PacmanItem::moveAnimationFinished()
+{
+    emit moveFinished();
+}
+
+
+void PacmanItem::_mouthAnimation(int speed)
 {
     speed = speed/2;
     this->_mouthStartAnimation->setDuration(speed);
@@ -161,16 +169,16 @@ void PacmanItem::deathAnimation()
 void PacmanItem::_rotatePacman(direction dr)
 {
     switch (dr) {
-    case direction::EAST:
+    case direction::RIGHT:
         this->setRotation(0);
         break;
-    case direction::NORTH:
+    case direction::UP:
         this->setRotation(270);
         break;
-    case direction::WEST:
+    case direction::LEFT:
         this->setRotation(180);
         break;
-    case direction::SOUTH:
+    case direction::DOWN:
         this->setRotation(90);
         break;
     default:
@@ -202,7 +210,7 @@ GhostItem::~GhostItem()
 }
 
 
-void GhostItem::moveTo(QPointF destPos, int &speed, direction dr)
+void GhostItem::moveTo(QPointF destPos, int speed, direction dr)
 {
     if (this->_moveAnimation->state() == QAbstractAnimation::Running)
     {

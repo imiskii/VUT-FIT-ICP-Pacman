@@ -14,6 +14,7 @@ gamepage::gamepage(QWidget *parent) :
     ui(new Ui::gamepage)
 {
     ui->setupUi(this);
+    this->setFocus();
 
     this->_scene = new QGraphicsScene(ui->GameGraphicsView);
     this->_pacman = nullptr;
@@ -98,6 +99,7 @@ void gamepage::ShowGameField(std::vector<std::vector<char>> &gameField)
                     break;
                 case 'S':
                     this->_pacman = new PacmanItem(position, this->_cellSize, this->_cellSize);
+                    connect(this->_pacman, &PacmanItem::moveFinished, this, &gamepage::PacmanMoveFinished);
                     this->_scene->addItem(this->_pacman);
                     break;
                 case 'T':
@@ -121,26 +123,31 @@ void gamepage::ShowMessage(QString msg)
 }
 
 
-void gamepage::UpdatePacmanPosition(direction dr)
+void gamepage::UpdatePacmanPosition(direction dr, int speed)
 {
-    int speed = 500;
     switch (dr)
     {
-    case direction::NORTH:
+    case direction::UP:
         this->_pacman->moveTo(this->_pacman->pos() + QPointF(0, -this->_cellSize), speed, dr);
         break;
-    case direction::WEST:
+    case direction::LEFT:
         this->_pacman->moveTo(this->_pacman->pos() + QPointF(-this->_cellSize, 0), speed, dr);
         break;
-    case direction::SOUTH:
+    case direction::DOWN:
         this->_pacman->moveTo(this->_pacman->pos() + QPointF(0, this->_cellSize), speed, dr);
         break;
-    case direction::EAST:
+    case direction::RIGHT:
         this->_pacman->moveTo(this->_pacman->pos() + QPointF(this->_cellSize, 0), speed, dr);
         break;
     default:
         break;
-    }
+    }    
+}
+
+
+void gamepage::PacmanMovementFinished()
+{
+    emit PacmanMoveFinished();
 }
 
 

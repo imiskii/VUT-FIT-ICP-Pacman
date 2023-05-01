@@ -45,7 +45,7 @@ class PacmanItem : public QObject, public QGraphicsEllipseItem
 public:
     PacmanItem(QPointF position, qreal &width, qreal &height);
     ~PacmanItem();
-    void moveTo(QPointF destPos, int &speed, direction dr);
+    void moveTo(QPointF destPos, int speed, direction dr);
     static const int DEATH_ANIMATION_SPEED = 1500;
     void deathAnimation();
 
@@ -58,7 +58,22 @@ private:
     QPointF _prevPos;                            //< Store last position before movement
     QPointF _nextPos;                            //< Store last position where pacman wanted to move
     void _rotatePacman(direction dr);
-    void _mouthAnimation(int &speed);
+    void _mouthAnimation(int speed);
+
+
+signals:
+    /**
+     * @brief moveFinished signal to game view that pacman movement was finished
+     */
+    void moveFinished();
+
+
+private slots:
+    /**
+     * @brief moveAnimationFinished handeling pacman movement animation
+     */
+    void moveAnimationFinished();
+
 };
 
 
@@ -70,7 +85,7 @@ class GhostItem : public QObject, public QGraphicsPixmapItem
 public:
     GhostItem(QPixmap &pixmap, QPointF position, qreal &width, qreal &height, QGraphicsPixmapItem *parent = nullptr);
     ~GhostItem();
-    void moveTo(QPointF desPos, int &speed, direction dr);
+    void moveTo(QPointF desPos, int speed, direction dr);
 
 private:
     QGraphicsPixmapItem *_ghostPixmapItem;

@@ -15,6 +15,7 @@ GameMap::GameMap()
 {
     this->_cols = 0;
     this->_rows = 0;
+    this->_mapName = "";
 }
 
 
@@ -24,8 +25,10 @@ GameMap::~GameMap()
 }
 
 
-bool GameMap::loadMap(vector<string> &fileLines)
+bool GameMap::loadMap(vector<string> &fileLines, string mapName)
 {
+    // set map name
+    this->_mapName = mapName;
     // check empty file
     if (fileLines.size() == 0) // file has 0 lines, so file is empty
     {
@@ -73,15 +76,19 @@ bool GameMap::loadMap(vector<string> &fileLines)
             switch (c)
             {
                 case 'S':
-                    this->_StartPos = QPointF(i+1, j+1);
+                    this->_itemsInMap.startPos = pair<int, int>(j+1, i+1);
                     break;
                 case 'G':
-                    this->_gostPos.push_back(QPointF(i+1, j+1));
+                    this->_itemsInMap.ghostsPos.push_back(pair<int, int>(j+1, i+1));
+                    break;
+                case 'K':
+                    this->_itemsInMap.keysPos.push_back(pair<int, int>(j+1, i+1));
+                    break;
+                case 'T':
+                    this->_itemsInMap.targetPos = pair<int, int>(j+1, i+1);
                     break;
                 case '.':
                 case 'X':
-                case 'K':
-                case 'T':
                     break;
                 default:
                     return false; // Unknow symbol
@@ -120,4 +127,32 @@ int GameMap::getRows() const
 vector<vector<char> > &GameMap::getMapField()
 {
     return this->_field;
+}
+
+
+MapItems GameMap::getMapItems()
+{
+    return this->_itemsInMap;
+}
+
+
+string GameMap::getMapName()
+{
+    return this->_mapName;
+}
+
+
+bool GameMap::isWall(int x, int y)
+{
+    try
+    {
+        if (this->_field.at(y).at(x) == 'X')
+            return true;
+        else
+            return false;
+    }
+    catch (out_of_range)
+    {
+        return false;
+    }
 }

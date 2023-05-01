@@ -57,20 +57,20 @@ void GameController::_KeyPressEvent(QKeyEvent *event)
     switch (event->key())
     {
     case Qt::Key_W:
-    case Qt::UpArrow:
-        emit MoveAction(direction::NORTH);
+    case Qt::Key_Up:
+        emit MoveAction(direction::UP);
         break;
     case Qt::Key_A:
-    case Qt::LeftArrow:
-        emit MoveAction(direction::WEST);
+    case Qt::Key_Left:
+        emit MoveAction(direction::LEFT);
         break;
     case Qt::Key_S:
-    case Qt::DownArrow:
-        emit MoveAction(direction::SOUTH);
+    case Qt::Key_Down:
+        emit MoveAction(direction::DOWN);
         break;
     case Qt::Key_D:
-    case Qt::RightArrow:
-        emit MoveAction(direction::EAST);
+    case Qt::Key_Right:
+        emit MoveAction(direction::RIGHT);
         break;
     default:
         break;

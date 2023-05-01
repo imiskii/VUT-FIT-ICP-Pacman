@@ -75,6 +75,10 @@ signals:
      * @brief GoOnHomePage signal to change page on home page
      */
     void GoOnHomePage();
+    /**
+     * @brief MoveFinished notify Model that pacman movement was finished
+     */
+    void PacmanMoveFinished();
 
 
 public slots:
@@ -102,7 +106,11 @@ public slots:
      * @brief UpdatePacmanPosition update position of pacman object on scene
      * @param dr direction of new pacman position
      */
-    void UpdatePacmanPosition(direction dr);
+    void UpdatePacmanPosition(direction dr, int speed);
+    /**
+     * @brief PacmanMovementFinished handeling signal from PacmanItem that animation of movement was finished
+     */
+    void PacmanMovementFinished();
 
 
 private slots:

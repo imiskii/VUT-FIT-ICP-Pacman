@@ -18,10 +18,11 @@
 
 enum class direction
 {
-    NORTH,
-    SOUTH,
-    WEST,
-    EAST
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    NONE
 };
 
 #endif // CONSTS_H
