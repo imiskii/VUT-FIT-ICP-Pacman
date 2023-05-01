@@ -31,6 +31,8 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
     connect(this, &GameController::ChooseMapFile, this->_GameM, &GameModel::SelectMapFile);
     connect(this, &GameController::StartGame, this->_GameM, &GameModel::BuildMap);
     connect(this, &GameController::MoveAction, this->_GameM, &GameModel::MovePacman);
+    connect(this, &GameController::ExitGame, this->_GameM, &GameModel::LeaveGame);
+    connect(this, &GameController::NextGame, this->_GameM, &GameModel::GoOnNextLevel);
     connect(this, &GameController::ChooseReplayFile, this->_ReplayM, &ReplayModel::SelectReplayFile);
 }
 
@@ -100,8 +102,10 @@ void GameController::GVHandleAction(GVActionCode code)
 {
     switch (code) {
     case GVActionCode::CLICKED_BUTTON_EXIT:
-    case GVActionCode::CLICKED_BUTTON_CONTINUE:
-        emit ChangeGVPage(GVPageCode::GAME_LOBBY);
+        emit ExitGame();
+        break;
+    case GVActionCode::CLICKED_BUTTON_NEXTLEVEL:
+        emit NextGame();
         break;
     case GVActionCode::CLICKED_BUTTON_BACK:
         emit ChangeGVPage(GVPageCode::HOME);

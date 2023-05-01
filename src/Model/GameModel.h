@@ -10,6 +10,8 @@
 
 #include <QObject>
 #include <QFileDialog>
+#include <vector>
+#include <utility>
 #include "../View/gamepage.h"
 #include "FileLoader.h"
 #include "GameMap.h"
@@ -17,6 +19,10 @@
 
 
 using namespace std;
+
+
+#define LEVEL_1_SPEED 350
+#define LEVEL_DIFF 30
 
 
 class GameModel : public QObject
@@ -29,11 +35,16 @@ public:
 
 
 private:
-    gamepage *_GameView;        //< Game View
-    GameMap *_Map;              //< Game map/field
-    Pacman *_Pacman;            //< object representing pacman
-    int _PacmanSpeed;           //< pacman transition time to a new field in milliseconds
-    int _GhostsSpeed;           //< ghosts transition time to a new field in milliseconds
+    unsigned short _gameLevel;      ///< Current level of the game
+    gamepage *_GameView;            ///< Game View
+    GameMap *_Map;                  ///< Game map/field
+    Pacman *_Pacman;                ///< object representing pacman
+    int _PacmanSpeed;               ///< pacman transition time to a new field in milliseconds
+    int _GhostsSpeed;               ///< ghosts transition time to a new field in milliseconds
+    pair<int, int> _targetPos;      ///< position of target point on map
+    vector<pair<int, int>> _keysPos;///< positions of keys in map
+
+
     /**
      * @brief _setNewPosition update given position (x,y) based on given direction
      * @param dr direction
@@ -41,6 +52,12 @@ private:
      * @param y reference to y position
      */
     void _setNewPosition(direction dr, int &x, int &y);
+    /**
+     * @brief _checkPosition check if on given position is key or target point. If there is key or target point it call next actions
+     * @param x position
+     * @param y position
+     */
+    void _checkPosition(int x, int y);
 
 
 signals:
@@ -74,6 +91,15 @@ signals:
      * @param dr direction where should pacman move
      */
     void NextMove(direction dr);
+    /**
+     * @brief KeyCollected notify Game View that KeyItem with given index was collected
+     * @param index index of collected item
+     */
+    void KeyCollected(int index);
+    /**
+     * @brief DeleteMap notify Game View to delete current scene
+     */
+    void DeleteMap();
 
 
 public slots:
@@ -95,6 +121,8 @@ public slots:
      * @brief KeepPacmanMoving call another move signal for pacman if last pacman movement was finished
      */
     void KeepPacmanMoving();
+    void LeaveGame();
+    void GoOnNextLevel();
 
 };
 

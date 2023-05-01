@@ -19,10 +19,10 @@
  */
 enum class GVPageCode
 {
-    HOME,       //< Home page
-    PLAY_GAME,  //< Game page
-    GAME_END,   //< Final page after game ends
-    GAME_LOBBY  //< Before game lobby page
+    HOME,       ///< Home page
+    PLAY_GAME,  ///< Game page
+    GAME_END,   ///< Final page after game ends
+    GAME_LOBBY  ///< Before game lobby page
 };
 
 
@@ -31,11 +31,11 @@ enum class GVPageCode
  */
 enum class GVActionCode
 {
-    CLICKED_BUTTON_BACK,        //< Back button
-    CLICKED_BUTTON_PLAYGAME,    //< PLAY button
-    CLICKED_BUTTON_EXIT,        //< Exit button
-    CLICKED_BUTTON_CONTINUE,    //< Continue button
-    CLICKED_BUTTON_CHOOSEMAP    //< Choose Map button
+    CLICKED_BUTTON_BACK,        ///< Back button
+    CLICKED_BUTTON_PLAYGAME,    ///< PLAY button
+    CLICKED_BUTTON_EXIT,        ///< Exit button
+    CLICKED_BUTTON_NEXTLEVEL,    ///< Continue button
+    CLICKED_BUTTON_CHOOSEMAP    ///< Choose Map button
 };
 
 
@@ -53,11 +53,26 @@ public:
 
 
 private:
-    Ui::gamepage *ui;               //< GamePage UI
-    QGraphicsScene *_scene;         //< Game scene
-    PacmanItem *_pacman;            //< Pacman view object
-    std::vector<GhostItem*> _ghosts; //< Items with ghost objects
-    qreal _cellSize;                //< Size of one cell in GraphicView
+    Ui::gamepage *ui;                   ///< GamePage UI
+    QGraphicsScene *_scene;             ///< Game scene
+    PacmanItem *_pacman;                ///< Pacman view object
+    std::vector<GhostItem*> _ghosts;    ///< Vector with ghost objects
+    std::vector<KeyItem*> _keys;        ///< Vector with keys objects
+    TargetItem *_target;                ///< Target item
+    qreal _cellSize;                    ///< Size of one cell in GraphicView
+
+
+protected:
+    /**
+     * @brief resizeEvent override of QWidget resizeEvent
+     * @param event
+     */
+    void resizeEvent(QResizeEvent* event) override;
+    /**
+     * @brief updateSceneItemsSize resize all items in QGraphicsView
+     * @param newSize new size of items in QGraphicsView
+     */
+    void updateSceneItemsSize(const QSize &newSize);
 
 
 signals:
@@ -111,6 +126,15 @@ public slots:
      * @brief PacmanMovementFinished handeling signal from PacmanItem that animation of movement was finished
      */
     void PacmanMovementFinished();
+    /**
+     * @brief deleteKeyFromMap delete KeyItem from map on given index
+     * @param index index of KeyItem
+     */
+    void deleteKeyFromMap(int index);
+    /**
+     * @brief deleteScene delete current displayed scene
+     */
+    void deleteScene();
 
 
 private slots:
@@ -127,14 +151,17 @@ private slots:
      */
     void on_GameExitButton_clicked();
     /**
-     * @brief on_EndContinueButton_clicked sends signal to Controller that 'Continue' button was clicked
+     * @brief on_EndContinueButton_clicked sends signal to Controller that 'Exit' button was clicked
      */
-    void on_EndContinueButton_clicked();
+    void on_ExitGameButton_clicked();
     /**
      * @brief on_ChooseMapFileButton_clicked sends signal to Controller that 'Choose Map' button was clicked
      */
     void on_ChooseMapFileButton_clicked();
-
+    /**
+     * @brief on_NextGame_clicked sends signal to Controller that 'NEXT LEVEL' button was clicked
+     */
+    void on_NextGame_clicked();
 };
 
 

@@ -11,10 +11,11 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     : QObject{parent}
 {
     this->_GameView = GameView;
-    this->_Map = new GameMap();
+    this->_Map = nullptr;
     this->_Pacman = nullptr;
-    this->_PacmanSpeed = 300;
-    this->_GhostsSpeed = 300;
+    this->_gameLevel = 1;
+    this->_PacmanSpeed = LEVEL_1_SPEED;
+    this->_GhostsSpeed = LEVEL_1_SPEED;
 
     connect(this, &GameModel::AddMapNameToCombobox, this->_GameView, &gamepage::AddMapName);
     connect(this, &GameModel::DisplayMap, this->_GameView, &gamepage::ShowGameField);
@@ -22,6 +23,8 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     connect(this, &GameModel::ChangePage, this->_GameView, &gamepage::MoveOnPage);
     connect(this, &GameModel::ChangePacmanPosition, this->_GameView, &gamepage::UpdatePacmanPosition);
     connect(this, &GameModel::NextMove, this, &GameModel::MovePacman);
+    connect(this, &GameModel::KeyCollected, this->_GameView, &gamepage::deleteKeyFromMap);
+    connect(this, &GameModel::DeleteMap, this->_GameView, &gamepage::deleteScene);
     connect(this->_GameView, &gamepage::PacmanMoveFinished, this, &GameModel::KeepPacmanMoving);
 
     // Load map names
@@ -51,10 +54,19 @@ void GameModel::SelectMapFile()
 
 void GameModel::BuildMap(QString map)
 {
+    if (this->_Map == nullptr)
+    {
+        this->_Map = new GameMap();
+    }
+
     string mapName = map.toStdString();
     // check if map is not already loaded
     if (!(mapName == this->_Map->getMapName())) // if different map is loaded
     {
+        // delete old map
+        delete this->_Map;
+        this->_Map = new GameMap();
+
         if (!map.contains("/")) // it is not full path
         {
             map = "../../examples/maps/" + map + ".txt";
@@ -77,6 +89,9 @@ void GameModel::BuildMap(QString map)
 
     MapItems itemsPos = this->_Map->getMapItems();
     this->_Pacman = new Pacman(itemsPos.startPos.first, itemsPos.startPos.second);
+    // @TODO: Add ghosts
+    this->_keysPos = itemsPos.keysPos;
+    this->_targetPos = itemsPos.targetPos;
 
     emit DisplayMap(this->_Map->getMapField());
     emit ChangePage(GVPageCode::PLAY_GAME);
@@ -151,6 +166,7 @@ void GameModel::KeepPacmanMoving()
 {
     // write new positionthis->_Pacman->setMoving(false);
     this->_Pacman->setCurrPos(this->_Pacman->next_x(), this->_Pacman->next_y());
+    this->_checkPosition(this->_Pacman->x(), this->_Pacman->y());
     this->_Pacman->setMoving(false);
     if (this->_Pacman->getNextDirection() != direction::NONE)
     {
@@ -165,7 +181,8 @@ void GameModel::KeepPacmanMoving()
 
 void GameModel::_setNewPosition(direction dr, int &x, int &y)
 {
-    switch (dr) {
+    switch (dr)
+    {
     case direction::DOWN:
         y += 1;
         break;
@@ -181,6 +198,59 @@ void GameModel::_setNewPosition(direction dr, int &x, int &y)
     default:
         break;
     }
+}
+
+
+void GameModel::_checkPosition(int x, int y)
+{
+    char item = this->_Map->isOnPosition(x, y);
+
+    if (item == 'K')
+    {
+        auto it = std::find(this->_keysPos.begin(), this->_keysPos.end(), std::pair(x, y));
+        if (it != _keysPos.end())
+        {
+            int index = std::distance(this->_keysPos.begin(), it);
+            this->_keysPos.erase(this->_keysPos.begin() + index);
+            emit KeyCollected(index);
+        }
+    }
+    else if (item == 'T' && this->_keysPos.empty())
+    {
+        // Game ends
+        emit ChangePage(GVPageCode::GAME_END);
+    }
+}
+
+
+void GameModel::LeaveGame()
+{
+    delete this->_Pacman;
+    this->_PacmanSpeed = LEVEL_1_SPEED;
+    this->_GhostsSpeed = LEVEL_1_SPEED;
+    this->_gameLevel = 1;
+    // @TODO: Add ghosts
+    emit DeleteMap();
+    emit ChangePage(GVPageCode::GAME_LOBBY);
+}
+
+
+void GameModel::GoOnNextLevel()
+{
+    if (this->_gameLevel <= 5)
+    {
+        this->_PacmanSpeed -= LEVEL_DIFF;
+        this->_GhostsSpeed -= LEVEL_DIFF;
+    }
+
+    MapItems itemsPos = this->_Map->getMapItems();
+    this->_Pacman = new Pacman(itemsPos.startPos.first, itemsPos.startPos.second);
+    // @TODO: Add ghosts
+    this->_keysPos = itemsPos.keysPos;
+    this->_targetPos = itemsPos.targetPos;
+    emit DeleteMap();
+    emit DisplayMap(this->_Map->getMapField());
+    emit ChangePage(GVPageCode::PLAY_GAME);
 }
 
 

@@ -156,3 +156,18 @@ bool GameMap::isWall(int x, int y)
         return false;
     }
 }
+
+
+char GameMap::isOnPosition(int x, int y)
+{
+    try
+    {
+        return this->_field.at(y).at(x);
+    }
+    catch (out_of_range)
+    {
+        return ' ';
+    }
+}
+
+/* END OF FILE */

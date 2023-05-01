@@ -17,6 +17,8 @@ gamepage::gamepage(QWidget *parent) :
     this->setFocus();
 
     this->_scene = new QGraphicsScene(ui->GameGraphicsView);
+    //connect(this, &gamepage::resize, this, &gamepage::resizeEvent);
+
     this->_pacman = nullptr;
     this->_cellSize = 0;
 }
@@ -25,6 +27,38 @@ gamepage::gamepage(QWidget *parent) :
 gamepage::~gamepage()
 {
     delete ui;
+    foreach(QGraphicsItem *item, this->_scene->items())
+    {
+        this->_scene->removeItem(item);
+        delete item;
+    }
+    delete this->_scene;
+}
+
+
+void gamepage::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+
+    this->updateSceneItemsSize(size());
+}
+
+
+void gamepage::updateSceneItemsSize(const QSize &newSize)
+{
+    // get pointer to QGraphicsScene
+    QGraphicsScene* scene = ui->GameGraphicsView->scene();
+
+
+    if (scene != nullptr)
+    {
+        // iterate through items in scene and change thier sizes
+        foreach(QGraphicsItem *item, scene->items())
+        {
+            item->setPos(item->pos().x() * newSize.width() / ui->GameGraphicsView->width(), item->pos().y() * newSize.height() / ui->GameGraphicsView->height());
+            item->setScale(newSize.width() / ui->GameGraphicsView->width());
+        }
+    }
 }
 
 
@@ -40,6 +74,8 @@ void gamepage::MoveOnPage(GVPageCode page)
         emit GoOnHomePage();
         break;
     case GVPageCode::GAME_END:
+        ui->stackedWidget->setCurrentIndex(2);
+        break;
     case GVPageCode::GAME_LOBBY:
         ui->stackedWidget->setCurrentIndex(0);
         break;
@@ -95,7 +131,8 @@ void gamepage::ShowGameField(std::vector<std::vector<char>> &gameField)
                     break;
                 case 'K':
                     PixmapItem = QPixmap(_KEY_PATH);
-                    this->_scene->addItem(new KeyItem(PixmapItem, position, this->_cellSize, this->_cellSize));
+                    this->_keys.push_back(new KeyItem(PixmapItem, position, this->_cellSize, this->_cellSize));
+                    this->_scene->addItem(this->_keys.back());
                     break;
                 case 'S':
                     this->_pacman = new PacmanItem(position, this->_cellSize, this->_cellSize);
@@ -104,7 +141,8 @@ void gamepage::ShowGameField(std::vector<std::vector<char>> &gameField)
                     break;
                 case 'T':
                     PixmapItem = QPixmap(_TARGET_PATH);
-                    this->_scene->addItem(new TargetItem(PixmapItem, position, this->_cellSize, this->_cellSize));
+                    this->_target = new TargetItem(PixmapItem, position, this->_cellSize, this->_cellSize);
+                    this->_scene->addItem(this->_target);
                     break;
                 default:
                     break;
@@ -151,6 +189,15 @@ void gamepage::PacmanMovementFinished()
 }
 
 
+void gamepage::deleteKeyFromMap(int index)
+{
+    auto *key = this->_keys.at(index);
+    this->_scene->removeItem(key);
+    delete key;
+    this->_keys.erase(this->_keys.begin() + index);
+}
+
+
 void gamepage::on_GameBackButton_clicked()
 {
     emit NotifyUserAction(GVActionCode::CLICKED_BUTTON_BACK);
@@ -169,15 +216,35 @@ void gamepage::on_GameExitButton_clicked()
 }
 
 
-void gamepage::on_EndContinueButton_clicked()
+void gamepage::on_ExitGameButton_clicked()
 {
-    emit NotifyUserAction(GVActionCode::CLICKED_BUTTON_CONTINUE);
+    emit NotifyUserAction(GVActionCode::CLICKED_BUTTON_EXIT);
+}
+
+
+void gamepage::on_NextGame_clicked()
+{
+    emit NotifyUserAction(GVActionCode::CLICKED_BUTTON_NEXTLEVEL);
 }
 
 
 void gamepage::on_ChooseMapFileButton_clicked()
 {
     emit NotifyUserAction(GVActionCode::CLICKED_BUTTON_CHOOSEMAP);
+}
+
+
+void gamepage::deleteScene()
+{
+    foreach(QGraphicsItem *item, this->_scene->items())
+    {
+        this->_scene->removeItem(item);
+        delete item;
+    }
+    this->_ghosts.clear();
+    this->_keys.clear();
+    this->_pacman = nullptr;
+    this->_target = nullptr;
 }
 
 

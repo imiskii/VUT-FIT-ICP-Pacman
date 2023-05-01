@@ -64,11 +64,18 @@ public:
     string getMapName();
     /**
      * @brief isWall check if on given position of field is wall
-     * @param x row
-     * @param y column
+     * @param x column
+     * @param y row
      * @return True if there is wall or False if there is something else or given position is out of map field
      */
     bool isWall(int x, int y);
+    /**
+     * @brief isOnPosition check what is on given position
+     * @param x column
+     * @param y row
+     * @return character that represents item on given position if given position is out of map field it returns space char (' ')
+     */
+    char isOnPosition(int x, int y);
 
 
 

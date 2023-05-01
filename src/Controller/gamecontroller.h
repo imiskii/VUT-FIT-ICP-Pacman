@@ -69,6 +69,14 @@ signals:
      * @param dr direction of movement that should be done
      */
     void MoveAction(direction dr);
+    /**
+     * @brief ExitGame notify model to exit the game
+     */
+    void ExitGame();
+    /**
+     * @brief NextGame notify model to start a new game
+     */
+    void NextGame();
 
 
 
