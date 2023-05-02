@@ -10,6 +10,7 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include <vector>
+#include "../consts.h"
 #include "ui_gamepage.h"
 #include "GameItems.h"
 
@@ -34,7 +35,7 @@ enum class GVActionCode
     CLICKED_BUTTON_BACK,        ///< Back button
     CLICKED_BUTTON_PLAYGAME,    ///< PLAY button
     CLICKED_BUTTON_EXIT,        ///< Exit button
-    CLICKED_BUTTON_NEXTLEVEL,    ///< Continue button
+    CLICKED_BUTTON_NEXTLEVEL,   ///< Continue button
     CLICKED_BUTTON_CHOOSEMAP    ///< Choose Map button
 };
 
@@ -43,11 +44,18 @@ namespace Ui {
 class gamepage;
 }
 
+/**
+ * @brief The gamepage class Pacman Game View
+ */
 class gamepage : public QWidget
 {
     Q_OBJECT
 
 public:
+    /**
+     * @brief gamepage constructor
+     * @param parent
+     */
     explicit gamepage(QWidget *parent = nullptr);
     ~gamepage();
 
@@ -55,6 +63,8 @@ public:
 private:
     Ui::gamepage *ui;                   ///< GamePage UI
     QGraphicsScene *_scene;             ///< Game scene
+    unsigned _mapRowCount;              ///< number of rows in map
+    unsigned _mapColumnCount;           ///< number of columns in map
     PacmanItem *_pacman;                ///< Pacman view object
     std::vector<GhostItem*> _ghosts;    ///< Vector with ghost objects
     std::vector<KeyItem*> _keys;        ///< Vector with keys objects
@@ -72,7 +82,7 @@ protected:
      * @brief updateSceneItemsSize resize all items in QGraphicsView
      * @param newSize new size of items in QGraphicsView
      */
-    void updateSceneItemsSize(const QSize &newSize);
+    void updateSceneItemsSize();
 
 
 signals:
@@ -166,3 +176,6 @@ private slots:
 
 
 #endif // GAMEPAGE_H
+
+
+/* END OF FILE */

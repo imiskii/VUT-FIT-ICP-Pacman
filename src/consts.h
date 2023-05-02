@@ -15,7 +15,19 @@
 #define _KEY_PATH "../../examples/graphics/Pacman-Key.png"
 #define _TARGET_PATH "../../examples/graphics/Target-Point.png"
 
+#define _MAP_REPLAY_FILE_EXT "txt"
+#define _MAP_FILES "../../examples/maps/"
 
+#define MAX_GAME_LEVEL 5
+#define LEVEL_1_SPEED 350
+#define LEVEL_DIFF 30
+
+#define RANDOM_SEED 123
+
+
+/**
+ * @brief The direction enum possible movement directions
+ */
 enum class direction
 {
     UP,
@@ -26,3 +38,6 @@ enum class direction
 };
 
 #endif // CONSTS_H
+
+
+/* END OF FILE */

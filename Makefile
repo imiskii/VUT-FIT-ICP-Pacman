@@ -5,6 +5,7 @@
 #
 
 TOPACK=Makefile README.txt doc examples src/build src/Controller src/Model src/View src/ICP-pacman.pro src/main.cpp src/consts.h
+TOCLEAN=src/build/* src/build/.qmake.stash src/build/.qtc_clangd *.zip doc/html
 
 
 all: compile
@@ -19,8 +20,12 @@ run: all
 	cd src/build && ./ICP-pacman
 
 
+doxygen:
+	cd doc/ && doxygen Doxyfile
+
+
 clean:
-	rm -rf src/build/* src/build/.qmake.stash src/build/.qtc_clangd *.zip
+	rm -rf $(TOCLEAN)
 
 
 pack: clean

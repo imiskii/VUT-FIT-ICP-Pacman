@@ -193,8 +193,8 @@ void PacmanItem::_rotatePacman(direction dr)
 
 GhostItem::GhostItem(QPixmap &pixmap, QPointF position, qreal &width, qreal &height, QGraphicsPixmapItem *parent) : QObject(), QGraphicsPixmapItem(pixmap, parent)
 {
-    // Ghost is moving object so it has to be on top of game field objects
-    this->setZValue(1);
+    // Ghost is moving object so it has to be on top of game field objects and also above pacman
+    this->setZValue(2);
     // set position and size
     this->setPos(position);
     this->setScale(qMin(width / pixmap.width(), height / pixmap.height()));

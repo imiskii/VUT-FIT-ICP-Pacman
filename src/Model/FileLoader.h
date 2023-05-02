@@ -38,3 +38,6 @@ bool ReadLinesFromFile(vector<string> &fileLines, const char *path);
 
 
 #endif // FILELOADER_H
+
+
+/* END OF FILE */

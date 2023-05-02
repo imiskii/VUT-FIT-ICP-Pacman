@@ -28,7 +28,7 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     connect(this->_GameView, &gamepage::PacmanMoveFinished, this, &GameModel::KeepPacmanMoving);
 
     // Load map names
-    for (auto& item : LoadFileNamesFromDir("../../examples/maps", "txt"))
+    for (auto& item : LoadFileNamesFromDir(_MAP_FILES, _MAP_REPLAY_FILE_EXT))
     {
         emit AddMapNameToCombobox(QString::fromStdString(item));
     }
@@ -69,7 +69,7 @@ void GameModel::BuildMap(QString map)
 
         if (!map.contains("/")) // it is not full path
         {
-            map = "../../examples/maps/" + map + ".txt";
+            map = _MAP_FILES + map + "." + _MAP_REPLAY_FILE_EXT;
         }
 
         std::vector<std::string> fileLines;
@@ -91,7 +91,6 @@ void GameModel::BuildMap(QString map)
     this->_Pacman = new Pacman(itemsPos.startPos.first, itemsPos.startPos.second);
     // @TODO: Add ghosts
     this->_keysPos = itemsPos.keysPos;
-    this->_targetPos = itemsPos.targetPos;
 
     emit DisplayMap(this->_Map->getMapField());
     emit ChangePage(GVPageCode::PLAY_GAME);
@@ -237,7 +236,7 @@ void GameModel::LeaveGame()
 
 void GameModel::GoOnNextLevel()
 {
-    if (this->_gameLevel <= 5)
+    if (this->_gameLevel <= MAX_GAME_LEVEL)
     {
         this->_PacmanSpeed -= LEVEL_DIFF;
         this->_GhostsSpeed -= LEVEL_DIFF;
@@ -247,7 +246,6 @@ void GameModel::GoOnNextLevel()
     this->_Pacman = new Pacman(itemsPos.startPos.first, itemsPos.startPos.second);
     // @TODO: Add ghosts
     this->_keysPos = itemsPos.keysPos;
-    this->_targetPos = itemsPos.targetPos;
     emit DeleteMap();
     emit DisplayMap(this->_Map->getMapField());
     emit ChangePage(GVPageCode::PLAY_GAME);

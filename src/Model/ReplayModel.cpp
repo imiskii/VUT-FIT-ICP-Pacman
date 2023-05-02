@@ -1,6 +1,6 @@
 /**
  * @file ReplayModel.cpp
- * @author Michal Ľaš (xlasmi00)
+ * @author 
  * @brief Replay Model
  * 
  */
@@ -35,3 +35,6 @@ void ReplayModel::SelectReplayFile()
         emit AddReplayToCombobox(fileName);
     }
 }
+
+
+/* END OF FILE */

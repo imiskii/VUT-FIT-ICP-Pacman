@@ -98,3 +98,6 @@ void Pacman::setMoving(bool state)
 {
     this->_moving = state;
 }
+
+
+/* END OF FILE */

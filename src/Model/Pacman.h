@@ -45,3 +45,6 @@ private:
 };
 
 #endif // PACMAN_H
+
+
+/* END OF FILE */

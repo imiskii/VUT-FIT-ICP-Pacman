@@ -1,6 +1,6 @@
 /**
  * @file ReplayModel.h
- * @author Michal Ľaš (xlasmi00)
+ * @author
  * @brief header file for ReplayModel.cpp
  * 
  */
@@ -23,7 +23,7 @@ public:
 
 
 private:
-    replaypage *_ReplayView; //< Replay View
+    replaypage *_ReplayView; ///< Replay View
 
 
 signals:
@@ -43,3 +43,6 @@ public slots:
 };
 
 #endif // REPLAYMODEL_H
+
+
+/* END OF FILE */

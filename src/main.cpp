@@ -23,3 +23,5 @@ int main(int argc, char *argv[])
     MainView->show();
     return a.exec();
 }
+
+/* END OF FILE */

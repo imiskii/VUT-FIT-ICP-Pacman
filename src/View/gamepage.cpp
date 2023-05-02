@@ -8,7 +8,6 @@
 #include "gamepage.h"
 #include "ui_gamepage.h"
 
-
 gamepage::gamepage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::gamepage)
@@ -17,7 +16,6 @@ gamepage::gamepage(QWidget *parent) :
     this->setFocus();
 
     this->_scene = new QGraphicsScene(ui->GameGraphicsView);
-    //connect(this, &gamepage::resize, this, &gamepage::resizeEvent);
 
     this->_pacman = nullptr;
     this->_cellSize = 0;
@@ -40,23 +38,40 @@ void gamepage::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
-    this->updateSceneItemsSize(size());
+    this->updateSceneItemsSize();
 }
 
 
-void gamepage::updateSceneItemsSize(const QSize &newSize)
+void gamepage::updateSceneItemsSize()
 {
-    // get pointer to QGraphicsScene
     QGraphicsScene* scene = ui->GameGraphicsView->scene();
-
-
     if (scene != nullptr)
     {
+        // get pointer to QGraphicsScene
+        qreal newCellSize;
+        // Calculate new size of cell
+        if (this->_mapRowCount < this->_mapColumnCount) // adjust scene for width
+        {
+            newCellSize = (ui->GameGraphicsView->width()-1)/this->_mapColumnCount; // scene width / count columns
+        }
+        else // adjust scene for height
+        {
+            newCellSize = (ui->GameGraphicsView->height()-1)/this->_mapRowCount; // scene height / count rows
+        }
+        qreal newScale = newCellSize / this->_cellSize;
+        this->_cellSize = newCellSize;
         // iterate through items in scene and change thier sizes
         foreach(QGraphicsItem *item, scene->items())
         {
-            item->setPos(item->pos().x() * newSize.width() / ui->GameGraphicsView->width(), item->pos().y() * newSize.height() / ui->GameGraphicsView->height());
-            item->setScale(newSize.width() / ui->GameGraphicsView->width());
+            // if it is QGraphicsPixmapItem adjust scale for them
+            QGraphicsPixmapItem *pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+            if (pixmapItem)
+            {
+                item->setPos(item->pos().x() * newScale, item->pos().y() * newScale);
+                item->setScale(pixmapItem->scale() * newScale);
+                continue;
+            }
+            item->setScale(newScale);
         }
     }
 }
@@ -94,24 +109,25 @@ void gamepage::AddMapName(QString mapName)
 
 void gamepage::ShowGameField(std::vector<std::vector<char>> &gameField)
 {
+    this->_mapRowCount = gameField.size();
+    this->_mapColumnCount = gameField.at(0).size();
     // Calculate size of one cell
-    int sceneWidth = ui->GameGraphicsView->size().width();
-    int sceneHeight = ui->GameGraphicsView->size().height();
-    if (sceneWidth < sceneHeight) // adjust scene for width
+    if (this->_mapRowCount < this->_mapColumnCount) // adjust scene for width
     {
-        this->_cellSize = (sceneWidth-1)/gameField.at(0).size(); // scene width / count columns
+        this->_cellSize = (ui->GameGraphicsView->size().width()-1)/this->_mapColumnCount; // scene width / count columns
     }
     else // adjust scene for height
     {
-        this->_cellSize = (sceneHeight-1)/gameField.size(); // scene height / count rows
+        this->_cellSize = (ui->GameGraphicsView->size().height()-1)/this->_mapRowCount; // scene height / count rows
     }
     // create array of ghosts
+    srand(RANDOM_SEED);
     std::vector<std::string> ghosts = {_RED_GHOST_PATH, _YELLOW_GHOST_PATH, _BLUE_GHOST_PATH};
 
     // Create items and add them to scene
-    for (size_t row = 0; row < gameField.size(); row++)
+    for (size_t row = 0; row < this->_mapRowCount; row++)
     {
-        for (size_t col = 0; col < gameField.at(row).size(); col++)
+        for (size_t col = 0; col < this->_mapColumnCount; col++)
         {
             QPointF position = QPointF(col * this->_cellSize, row * this->_cellSize);
             if (gameField.at(row).at(col) == 'X')
@@ -125,7 +141,7 @@ void gamepage::ShowGameField(std::vector<std::vector<char>> &gameField)
                 switch (gameField.at(row).at(col))
                 {
                 case 'G':
-                    PixmapItem = QPixmap(ghosts.at((row)%3).c_str());
+                    PixmapItem = QPixmap(ghosts.at(rand()%3).c_str());
                     this->_ghosts.push_back(new GhostItem(PixmapItem, position, this->_cellSize, this->_cellSize));
                     this->_scene->addItem(this->_ghosts.back());
                     break;
@@ -248,3 +264,4 @@ void gamepage::deleteScene()
 }
 
 
+/* END OF FILE */

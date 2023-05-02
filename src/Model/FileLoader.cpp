@@ -54,3 +54,6 @@ bool ReadLinesFromFile(vector<string> &fileLines, const char *path)
 
     return true;
 }
+
+
+/* END OF FILE */

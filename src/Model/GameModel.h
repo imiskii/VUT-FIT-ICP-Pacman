@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <vector>
 #include <utility>
+#include "../consts.h"
 #include "../View/gamepage.h"
 #include "FileLoader.h"
 #include "GameMap.h"
@@ -19,10 +20,6 @@
 
 
 using namespace std;
-
-
-#define LEVEL_1_SPEED 350
-#define LEVEL_DIFF 30
 
 
 class GameModel : public QObject
@@ -41,7 +38,6 @@ private:
     Pacman *_Pacman;                ///< object representing pacman
     int _PacmanSpeed;               ///< pacman transition time to a new field in milliseconds
     int _GhostsSpeed;               ///< ghosts transition time to a new field in milliseconds
-    pair<int, int> _targetPos;      ///< position of target point on map
     vector<pair<int, int>> _keysPos;///< positions of keys in map
 
 
@@ -127,3 +123,6 @@ public slots:
 };
 
 #endif // GAMEMODEL_H
+
+
+/* END OF FILE */

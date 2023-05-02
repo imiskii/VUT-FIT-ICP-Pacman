@@ -1,3 +1,10 @@
+/**
+ * @file gamecontroller.h
+ * @author Michal Ľaš (xlasmi00)
+ * @brief header file for gamecontroller.cpp
+ * 
+ */
+
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
@@ -9,22 +16,39 @@
 #include "Model/ReplayModel.h"
 
 
+/**
+ * @brief The GameController class for handeling signals from View and user input
+ */
 class GameController : public QObject
 {
     Q_OBJECT
+
 public:
+    /**
+     * @brief GameController constructor
+     * @param parent parent item
+     * @param MainView pointer to main page
+     * @param GameView pointer to game page
+     * @param ReplayView pointer to replay page
+     * @param GameM pointer to game model
+     * @param ReplayM pointer to replay model
+     */
     explicit GameController(QObject *parent = nullptr, MainWindow *MainView = nullptr, gamepage *GameView = nullptr, replaypage *ReplayView = nullptr,
                             GameModel *GameM = nullptr, ReplayModel *ReplayM = nullptr);
     ~GameController();
 
 
 private:
-    MainWindow *_MainView;      //< pointer to Main View
-    gamepage *_GameView;        //< pointer to Game View
-    replaypage *_ReplayView;    //< pointer to Replay View
-    GameModel *_GameM;          //< pointer to Game Model
-    ReplayModel *_ReplayM;      //< pointer to Replay Model
-    void _KeyPressEvent(QKeyEvent *event); //< functions for handeling pressed keys
+    MainWindow *_MainView;                  ///< pointer to Main View
+    gamepage *_GameView;                    ///< pointer to Game View
+    replaypage *_ReplayView;                ///< pointer to Replay View
+    GameModel *_GameM;                      ///< pointer to Game Model
+    ReplayModel *_ReplayM;                  ///< pointer to Replay Model
+    /**
+     * @brief _KeyPressEvent method for handeling pressed keys
+     * @param event
+     */
+    void _KeyPressEvent(QKeyEvent *event);
 
 
 protected:
@@ -104,3 +128,6 @@ public slots:
 };
 
 #endif // GAMECONTROLLER_H
+
+
+/* END OF FILE */

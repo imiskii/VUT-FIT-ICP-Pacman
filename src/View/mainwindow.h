@@ -38,19 +38,28 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+/**
+ * @brief The MainWindow class class representing application hame page
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    /**
+     * @brief MainWindow constructor
+     * @param parent parent item
+     * @param GamePage pointer to GameView (gamepage class), page with game page
+     * @param ReplayPage pointer to ReplayView (replaypage class), page with replay page
+     */
     MainWindow(QWidget *parent = nullptr, gamepage *GamePage = nullptr, replaypage *ReplayPage = nullptr);
     ~MainWindow();
 
 
 private:
     Ui::MainWindow *ui;
-    gamepage *_GamePage;        //< Game Page
-    replaypage *_ReplayPage;    //< Replay Page
+    gamepage *_GamePage;        ///< Game Page
+    replaypage *_ReplayPage;    ///< Replay Page
 
 
 signals:
@@ -93,3 +102,6 @@ private slots:
 
 };
 #endif // MAINWINDOW_H
+
+
+/* END OF FILE */

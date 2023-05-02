@@ -16,6 +16,7 @@ GameMap::GameMap()
     this->_cols = 0;
     this->_rows = 0;
     this->_mapName = "";
+    this->_itemsInMap.targetPos = pair<int, int>(-1,-1);
 }
 
 
@@ -102,6 +103,12 @@ bool GameMap::loadMap(vector<string> &fileLines, string mapName)
         }
         this->_field.push_back(line); // put new line to 2D array - _field
     }
+    // check if target point was given
+    if (this->_itemsInMap.targetPos == pair<int, int>(-1,-1))
+    {
+        return false;
+    }
+
     // add botton border
     this->_field.push_back(border);
     // count added borders

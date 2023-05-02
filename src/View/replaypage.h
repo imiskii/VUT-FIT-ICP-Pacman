@@ -1,6 +1,6 @@
 /**
  * @file replaypage.h
- * @author Michal Ľaš (xlasmi00)
+ * @author 
  * @brief header file for replaypage.cpp
  * 
  */
@@ -38,11 +38,18 @@ namespace Ui {
 class replaypage;
 }
 
+/**
+ * @brief The replaypage class pacman Replay View
+ */
 class replaypage : public QWidget
 {
     Q_OBJECT
 
 public:
+    /**
+     * @brief replaypage constructor
+     * @param parent
+     */
     explicit replaypage(QWidget *parent = nullptr);
     ~replaypage();
 
@@ -95,3 +102,6 @@ private slots:
 };
 
 #endif // REPLAYPAGE_H
+
+
+/* END OF FILE */

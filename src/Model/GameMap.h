@@ -17,6 +17,9 @@
 using namespace std;
 
 
+/**
+ * @brief The MapItems structure for positions of important map items
+ */
 struct MapItems
 {
     pair<int, int> startPos;
@@ -26,6 +29,9 @@ struct MapItems
 };
 
 
+/**
+ * @brief The GameMap class representing map field
+ */
 class GameMap
 {
 public:
@@ -77,16 +83,16 @@ public:
      */
     char isOnPosition(int x, int y);
 
-
-
-
 private:
-    string _mapName;
-    MapItems _itemsInMap;
-    int _rows;
-    int _cols;
-    vector<vector<char>> _field;
+    string _mapName;                ///< name of map
+    MapItems _itemsInMap;           ///< structure with positions of important map items
+    int _rows;                      ///< number of map rows
+    int _cols;                      ///< number of map columns
+    vector<vector<char>> _field;    ///< 2D array representig map field
 
 };
 
 #endif // GAMEMAP_H
+
+
+/* END OF FILE */

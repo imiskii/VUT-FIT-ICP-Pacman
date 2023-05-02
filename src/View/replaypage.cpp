@@ -1,6 +1,6 @@
 /**
  * @file replaypage.cpp
- * @author Michal Ľaš (xlasmi00)
+ * @author 
  * @brief Replay view
  * 
  */
@@ -69,3 +69,4 @@ void replaypage::on_ChooseReplayFileButton_clicked()
     emit NotifyUserAction(RVActionCode::CLICKED_BUTTON_CHOOSEREPLAY);
 }
 
+/* END OF FILE */

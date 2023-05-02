@@ -1,3 +1,11 @@
+/**
+ * @file gamecontroller.h
+ * @author Michal Ľaš (xlasmi00)
+ * @brief controller for pacman game - handeling view signals and user input
+ * 
+ */
+
+
 #include "gamecontroller.h"
 
 
@@ -146,3 +154,4 @@ void GameController::PlayButtonAction(QString choosenMap)
 }
 
 
+/* END OF FILE */
