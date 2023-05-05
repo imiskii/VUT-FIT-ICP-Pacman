@@ -106,3 +106,13 @@ CMakeLists.txt.user*
 # --------
 *.dll
 *.exe
+
+# Build dirs
+src/build
+build-*
+
+# project binary
+ICP-pacman
+
+# Makefile created by qmake
+src/Makefile

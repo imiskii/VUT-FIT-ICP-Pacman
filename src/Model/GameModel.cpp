@@ -2,7 +2,7 @@
  * @file GameModel.cpp
  * @author Michal Ľaš (xlasmi00)
  * @brief Game Model
- * 
+ *
  */
 
 #include "GameModel.h"
@@ -85,6 +85,10 @@ void GameModel::BuildMap(QString map)
             emit DisplayMessage("The map file is corrupted !");
             return;
         }
+
+        Logger *logger = Logger::access();
+        logger->createLogFile(fileLines);
+        logger->log("testing");
     }
 
     MapItems itemsPos = this->_Map->getMapItems();
@@ -128,7 +132,7 @@ void GameModel::MovePacman(direction dr)
         // check if it possible to move to given direction
         int t_x = this->_Pacman->x();
         int t_y = this->_Pacman->y();
-        this->_setNewPosition(dr, t_x, t_y);   
+        this->_setNewPosition(dr, t_x, t_y);
         if (!this->_Map->isWall(t_x, t_y))
         {
             // reset next direction if movement to next direction was successful

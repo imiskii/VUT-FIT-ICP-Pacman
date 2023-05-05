@@ -2,7 +2,7 @@
  * @file gamecontroller.h
  * @author Michal Ľaš (xlasmi00)
  * @brief header file for gamecontroller.cpp
- * 
+ *
  */
 
 #ifndef GAMECONTROLLER_H

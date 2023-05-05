@@ -9,6 +9,7 @@ CONFIG += c++1z
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Model/Logger.cpp \
     Model/GameMap.cpp \
     Model/FileLoader.cpp \
     Model/GameModel.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
     View/replaypage.cpp
 
 HEADERS += \
+    Model/Logger.h \
     Model/GameMap.h \
     Model/FileLoader.h \
     Model/GameModel.h \

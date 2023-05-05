@@ -2,7 +2,7 @@
  * @file GameMap.cpp
  * @author Michal Ľaš (xlasmi00)
  * @brief Class representing Game Map
- * 
+ *
  */
 
 #include "GameMap.h"
@@ -92,7 +92,7 @@ bool GameMap::loadMap(vector<string> &fileLines, string mapName)
                 case 'X':
                     break;
                 default:
-                    return false; // Unknow symbol
+                    return false; // Unknown symbol
             }
 
             line.push_back(c);

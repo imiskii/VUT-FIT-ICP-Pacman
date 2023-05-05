@@ -2,7 +2,7 @@
  * @file GameModel.h
  * @author Michal Ľaš (xlasmi00)
  * @brief header file for GameModel.cpp
- * 
+ *
  */
 
 #ifndef GAMEMODEL_H
@@ -17,7 +17,7 @@
 #include "FileLoader.h"
 #include "GameMap.h"
 #include "Pacman.h"
-
+#include "Logger.h"
 
 using namespace std;
 
