@@ -210,7 +210,7 @@ GhostItem::~GhostItem()
 }
 
 
-void GhostItem::moveTo(QPointF destPos, int speed, direction dr)
+void GhostItem::moveTo(QPointF destPos, int speed)
 {
     if (this->_moveAnimation->state() == QAbstractAnimation::Running)
     {

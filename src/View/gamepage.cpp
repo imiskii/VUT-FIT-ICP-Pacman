@@ -2,7 +2,7 @@
  * @file gamepage.cpp
  * @author Michal Ľaš (xlasmi00)
  * @brief Game View
- * 
+ *
  */
 
 #include "gamepage.h"
@@ -195,9 +195,17 @@ void gamepage::UpdatePacmanPosition(direction dr, int speed)
         break;
     default:
         break;
-    }    
+    }
 }
 
+
+void gamepage::updateGhostPositions(vector<pair<int, int>> &newpos, int speed)
+{
+    for(int i = 0; i < newpos.size(); ++i)
+    {
+        _ghosts[i]->moveTo(QPointF(_cellSize * newpos[i].first,_cellSize * newpos[i].second), speed);
+    }
+}
 
 void gamepage::PacmanMovementFinished()
 {

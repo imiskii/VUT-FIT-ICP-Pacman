@@ -2,7 +2,7 @@
  * @file GameMap.h
  * @author Michal Ľaš (xlasmi00)
  * @brief header file for GameMap.cpp
- * 
+ *
  */
 
 #ifndef GAMEMAP_H
@@ -62,7 +62,7 @@ public:
      * @brief getMapItems get positions of items in map
      * @return structure with positions of items in map
      */
-    MapItems getMapItems();
+    MapItems &getMapItems();
     /**
      * @brief getMapName getter for attribute mapName
      * @return name of map that was loaded

@@ -14,6 +14,7 @@
 #include "ui_gamepage.h"
 #include "GameItems.h"
 
+using namespace std;
 
 /**
  * @brief The GVPageCode enum application pages codes in GameView
@@ -146,6 +147,7 @@ public slots:
      */
     void deleteScene();
 
+    void updateGhostPositions(vector<pair<int, int>> &newpos, int speed);
 
 private slots:
     /**

@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <vector>
 #include <utility>
+#include <QTimer>
 #include "../consts.h"
 #include "../View/gamepage.h"
 #include "FileLoader.h"
@@ -29,7 +30,7 @@ class GameModel : public QObject
 public:
     explicit GameModel(QObject *parent = nullptr, gamepage *GameView = nullptr);
     ~GameModel();
-
+    int getGhostSpeed();
 
 private:
     unsigned short _gameLevel;      ///< Current level of the game
@@ -39,6 +40,7 @@ private:
     int _PacmanSpeed;               ///< pacman transition time to a new field in milliseconds
     int _GhostsSpeed;               ///< ghosts transition time to a new field in milliseconds
     vector<pair<int, int>> _keysPos;///< positions of keys in map
+    QTimer GhostTimer;              ///< timer controlling ghost movement
 
 
     /**
@@ -54,7 +56,7 @@ private:
      * @param y position
      */
     void _checkPosition(int x, int y);
-
+    vector<pair<int, int>> GetFreeNeighbors(int x, int y);
 
 signals:
     /**
@@ -86,6 +88,9 @@ signals:
      * @brief NextMove continue in next/currnet pacman movement
      * @param dr direction where should pacman move
      */
+
+    void ChangeGhostPositions(vector<pair<int, int>> &newpos, int speed);
+
     void NextMove(direction dr);
     /**
      * @brief KeyCollected notify Game View that KeyItem with given index was collected
@@ -96,7 +101,6 @@ signals:
      * @brief DeleteMap notify Game View to delete current scene
      */
     void DeleteMap();
-
 
 public slots:
     /**
@@ -119,7 +123,7 @@ public slots:
     void KeepPacmanMoving();
     void LeaveGame();
     void GoOnNextLevel();
-
+    void MoveGhosts();
 };
 
 #endif // GAMEMODEL_H

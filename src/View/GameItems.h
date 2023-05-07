@@ -2,7 +2,7 @@
  * @file GameItems.h
  * @author Michal Ľaš (xlasmi00)
  * @brief header file for GameItems.cpp
- * 
+ *
  */
 
 #ifndef GAMEITEMS_H
@@ -145,7 +145,7 @@ public:
      * @param speed speed of moving
      * @param dr direction of movement
      */
-    void moveTo(QPointF desPos, int speed, direction dr);
+    void moveTo(QPointF desPos, int speed);
 
 private:
     QGraphicsPixmapItem *_ghostPixmapItem;  ///< pixel map of ghost image

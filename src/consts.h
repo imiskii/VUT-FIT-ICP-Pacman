@@ -2,7 +2,7 @@
  * @file consts.h
  * @author Michal Ľaš (xlasmi00)
  * @brief definitions of constans for Pacman project
- * 
+ *
  */
 
 #ifndef CONSTS_H
@@ -27,14 +27,15 @@
 
 /**
  * @brief The direction enum possible movement directions
+ * Opposite directions are assigned opposite numbers
  */
-enum class direction
+enum direction
 {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    NONE
+    UP = -2,
+    LEFT = -1,
+    NONE = 0,
+    RIGHT = 1,
+    DOWN = 2,
 };
 
 #endif // CONSTS_H

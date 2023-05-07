@@ -137,7 +137,7 @@ vector<vector<char> > &GameMap::getMapField()
 }
 
 
-MapItems GameMap::getMapItems()
+MapItems &GameMap::getMapItems()
 {
     return this->_itemsInMap;
 }
