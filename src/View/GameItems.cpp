@@ -151,13 +151,15 @@ void PacmanItem::_mouthAnimation(int speed)
     });
 }
 
-
 void PacmanItem::deathAnimation()
 {
-    this->_mouthStartAnimation->setStartValue(this->startAngle());
+    _moveAnimation->stop();
+    _mouthStartAnimation->stop();
+    _mouthSpanAnimation->stop();
     this->_mouthStartAnimation->setEndValue(180 *16);
-    this->_mouthSpanAnimation->setStartValue(this->spanAngle());
     this->_mouthSpanAnimation->setEndValue(0);
+    _mouthStartAnimation->setDirection(QAbstractAnimation::Forward);
+    _mouthSpanAnimation->setDirection(QAbstractAnimation::Forward);
 
     this->_mouthStartAnimation->setDuration(this->DEATH_ANIMATION_SPEED);
     this->_mouthSpanAnimation->setDuration(this->DEATH_ANIMATION_SPEED);
@@ -221,6 +223,10 @@ void GhostItem::moveTo(QPointF destPos, int speed)
     this->_moveAnimation->start();
 }
 
+void GhostItem::freeze()
+{
+    _moveAnimation->stop();
+}
 
 /***************************************************************/
 

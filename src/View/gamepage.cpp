@@ -198,6 +198,14 @@ void gamepage::UpdatePacmanPosition(direction dr, int speed)
     }
 }
 
+void gamepage::PacManDeath()
+{
+    for (auto &ghost: _ghosts)
+    {
+        ghost->freeze();
+    }
+    _pacman->deathAnimation();
+}
 
 void gamepage::updateGhostPositions(vector<pair<int, int>> &newpos, int speed)
 {

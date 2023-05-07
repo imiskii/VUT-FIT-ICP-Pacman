@@ -17,6 +17,7 @@ Entity::Entity(int x, int y)
     this->_currDirection = direction::NONE;
     this->_nextDirection = direction::NONE;
     this->_moving = false;
+    movable = true;
 }
 
 
@@ -56,11 +57,20 @@ void Entity::setCurrPos(int x, int y)
     this->y_pos = y;
 }
 
+pair<int, int> Entity::getCurrPos()
+{
+    return pair<int, int>(x_pos, y_pos);
+}
 
 void Entity::setNextPos(int x, int y)
 {
     this->x_next_pos = x;
     this->y_next_pos = y;
+}
+
+pair<int, int> Entity::getNextPos()
+{
+    return pair<int, int>(x_next_pos, y_next_pos);
 }
 
 
@@ -99,5 +109,14 @@ void Entity::setMoving(bool state)
     this->_moving = state;
 }
 
+bool Entity::isMovable()
+{
+    return movable;
+}
+
+void Entity::setMovable(bool state)
+{
+    movable = state;
+}
 
 /* END OF FILE */

@@ -13,6 +13,8 @@
 #include <vector>
 #include <utility>
 #include <QTimer>
+#include <QThread>
+#include <ctime>
 #include "../consts.h"
 #include "../View/gamepage.h"
 #include "FileLoader.h"
@@ -102,6 +104,8 @@ signals:
      * @brief DeleteMap notify Game View to delete current scene
      */
     void DeleteMap();
+
+    void Death();
 
 public slots:
     /**

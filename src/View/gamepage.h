@@ -149,6 +149,8 @@ public slots:
 
     void updateGhostPositions(vector<pair<int, int>> &newpos, int speed);
 
+    void PacManDeath();
+
 private slots:
     /**
      * @brief on_GameBackButton_clicked sends signal to Controller that 'Back' button was clicked

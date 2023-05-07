@@ -147,6 +147,8 @@ public:
      */
     void moveTo(QPointF desPos, int speed);
 
+    void freeze();
+
 private:
     QGraphicsPixmapItem *_ghostPixmapItem;  ///< pixel map of ghost image
     QPropertyAnimation *_moveAnimation;     ///< instance of QPropertyAnimation class for ghost move animation

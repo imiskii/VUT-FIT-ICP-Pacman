@@ -31,6 +31,9 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     connect(this, &GameModel::DeleteMap, this->_GameView, &gamepage::deleteScene);
     connect(this->_GameView, &gamepage::PacmanMoveFinished, this, &GameModel::KeepPacmanMoving);
     connect(this, &GameModel::ChangeGhostPositions, _GameView, &gamepage::updateGhostPositions);
+    connect(this, &GameModel::Death, _GameView, &gamepage::PacManDeath);
+
+    srand(time(nullptr)); // seed randomized ghost movement
 
     // Load map names
     for (auto& item : LoadFileNamesFromDir(_MAP_FILES, _MAP_REPLAY_FILE_EXT))
@@ -112,6 +115,10 @@ void GameModel::MovePacman(direction dr)
 {
     Logger *logger = Logger::access();
     direction currentPacmanDirection = this->_Pacman->getCurrDirection();
+    if (!_Pacman->isMovable())
+    {
+        return; // PacMan cannot move after death
+    }
     // check if pacman is moving
     if (this->_Pacman->isMoving())
     {
@@ -295,6 +302,28 @@ void GameModel::MoveGhosts()
         int random_index = rand() % freeNeighbors.size();
         auto &newghostpos = freeNeighbors[random_index];
         ghost.setCurrPos(newghostpos.first, newghostpos.second);
+        if(newghostpos == _Pacman->getCurrPos() || newghostpos == _Pacman->getNextPos())
+        {
+            _Pacman->setMovable(false);
+            GhostTimer.stop();
+            emit Death();
+
+            QTimer::singleShot(2000, this, [=]() {
+                MapItems itemsPos = this->_Map->getMapItems();
+                delete this->_Pacman;
+                this->_Pacman = new Entity(itemsPos.startPos.first, itemsPos.startPos.second);
+                Ghosts.clear();
+                for (auto &ghost: itemsPos.ghostsPos) {
+                    Ghosts.push_back(Entity(ghost.first, ghost.second));
+                }
+                this->_keysPos = itemsPos.keysPos;
+                emit DeleteMap();
+                emit DisplayMap(this->_Map->getMapField());
+                emit ChangePage(GVPageCode::PLAY_GAME);
+                GhostTimer.start();
+                _Pacman->setMovable(true);
+            });
+        }
         newpos.push_back(newghostpos);
     }
     emit ChangeGhostPositions(newpos, _GhostsSpeed);

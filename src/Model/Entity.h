@@ -24,13 +24,17 @@ public:
     int next_x();
     int next_y();
     void setCurrPos(int x, int y);
+    pair<int, int> getCurrPos();
     void setNextPos(int x, int y);
+    pair<int, int> getNextPos();
     direction getCurrDirection();
     direction getNextDirection();
     void setCurrDirection(direction dr);
     void setNextDirection(direction dr);
     bool isMoving();
     void setMoving(bool state);
+    bool isMovable();
+    void setMovable(bool state);
 
 
 private:
@@ -41,6 +45,7 @@ private:
     direction _currDirection;   //< current pacman movement direction
     direction _nextDirection;   //< next pacman movement direction - allows save the next change of direction
     bool _moving;               //< true if pacman is currently moving false if it is not moving
+    bool movable;               //< if pacman dies, it cannot be moved until next round starts
 
 };
 
