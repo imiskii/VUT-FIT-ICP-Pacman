@@ -1,46 +1,53 @@
 #include "Logger.h"
 #include <iostream>
 
-Logger *Logger::logger = nullptr;
-
-Logger::Logger() {}
-
 Logger::~Logger()
 {
-    if (logger != nullptr)
+    if(logFile.is_open())
     {
-        if(logger->logFile.is_open())
-        {
-            logger->logFile.close();
-        }
-        delete logger;
+        logFile.close();
     }
-}
-
-Logger *Logger::access()
-{
-    if (logger == nullptr)
-    {
-        logger = new Logger();
-    }
-    return logger;
 }
 
 bool Logger::createLogFile(vector<string> &fileLines)
 {
+    if(!filesystem::is_directory("../../logs"))
+    {
+        if(!filesystem::create_directory("../../logs"))
+        {
+            cerr << "Warning: failed to create logs directory. Logs will not be stored." << endl;
+        }
+    }
     if (logFile.is_open())
     {
         logFile.close();
     }
-    logFile = ofstream("../../logs/log1");
-    for (auto line: fileLines)
+
+    // Get current time as timestamp
+    auto currentTime = chrono::system_clock::now();
+    time_t timestamp = chrono::system_clock::to_time_t(currentTime);
+
+    // Format timestamp as string
+    stringstream filename;
+    filename << "../../logs/log_" << std::put_time(std::localtime(&timestamp), "%Y-%m-%d_%H:%M:%S");
+
+    logFile = ofstream(filename.str());
+    if (!logFile.is_open())
     {
-        logFile << line << endl;
+        cerr << "Warning: failed to open log file. The game will not be logged." << endl;
+        return false;
     }
-    return true;
+    else
+    {
+        for (auto line: fileLines)
+        {
+            logFile << line << endl;
+        }
+        return true;
+    }
 }
 
-void Logger::log(const char *msg)
+void Logger::log(string msg)
 {
     logFile << msg << endl;
 }

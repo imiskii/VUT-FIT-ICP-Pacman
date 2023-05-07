@@ -94,14 +94,18 @@ void GameModel::BuildMap(QString map)
             return;
         }
 
-        Logger *logger = Logger::access();
-        logger->createLogFile(fileLines);
+        logger.createLogFile(fileLines);
     }
 
     MapItems itemsPos = this->_Map->getMapItems();
     this->_Pacman = new Entity(itemsPos.startPos.first, itemsPos.startPos.second);
-    for (auto &ghost: itemsPos.ghostsPos) {
-        Ghosts.push_back(Entity(ghost.first, ghost.second));
+    logger.log("P " + to_string(_Pacman->x()) + " " + to_string(_Pacman->y()));
+    for (int i = 0; i < itemsPos.ghostsPos.size(); ++i) {
+        auto &ghost = itemsPos.ghostsPos[i];
+        Entity GhostModel(ghost.first, ghost.second);
+        GhostModel.assignNumber(i);
+        logger.log("G " + to_string(i) + " " + to_string(ghost.first) + " " + to_string(ghost.second));
+        Ghosts.push_back(GhostModel);
     }
     this->_keysPos = itemsPos.keysPos;
 
@@ -113,7 +117,6 @@ void GameModel::BuildMap(QString map)
 
 void GameModel::MovePacman(direction dr)
 {
-    Logger *logger = Logger::access();
     direction currentPacmanDirection = this->_Pacman->getCurrDirection();
     if (!_Pacman->isMovable())
     {
@@ -295,6 +298,8 @@ vector<pair<int, int>> GameModel::GetFreeNeighbors(int x, int y)
 
 void GameModel::MoveGhosts()
 {
+    logger.log("T"); // Indicate that positions are in a new "tick"
+    logger.log("P " + to_string(_Pacman->next_x()) + " " + to_string(_Pacman->next_y())); // log pacman movement together with ghost movement
     vector<pair<int ,int>> newpos;
     for(auto &ghost: Ghosts)
     {
@@ -302,6 +307,8 @@ void GameModel::MoveGhosts()
         int random_index = rand() % freeNeighbors.size();
         auto &newghostpos = freeNeighbors[random_index];
         ghost.setCurrPos(newghostpos.first, newghostpos.second);
+        logger.log("G " + to_string(ghost.getNumber()) + " "
+            + to_string(ghost.x()) + " " + to_string(ghost.y()));
         if(newghostpos == _Pacman->getCurrPos() || newghostpos == _Pacman->getNextPos())
         {
             _Pacman->setMovable(false);

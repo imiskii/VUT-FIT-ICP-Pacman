@@ -1,15 +1,15 @@
 /**
  * @file replaypage.h
- * @author 
+ * @author
  * @brief header file for replaypage.cpp
- * 
+ *
  */
 
 #ifndef REPLAYPAGE_H
 #define REPLAYPAGE_H
 
 #include <QWidget>
-
+#include "gamepage.h"
 
 /**
  * @brief The RVPageCode enum application pages codes in ReplayView

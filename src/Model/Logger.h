@@ -3,22 +3,23 @@
 
 #include <fstream>
 #include <vector>
+#include <ctime>
+#include <filesystem>
+#include <iostream>
+#include <sstream>
+#include <chrono>
 
 using namespace std;
 
 class Logger
 {
 private:
-    Logger();
     ofstream logFile;
-    static Logger *logger;
 
 public:
     ~Logger();
-    static Logger *access();
-
     bool createLogFile(vector<string> &fileLines);
-    void log(const char *msg);
+    void log(string msg);
 };
 
 #endif

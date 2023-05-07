@@ -119,4 +119,14 @@ void Entity::setMovable(bool state)
     movable = state;
 }
 
+void Entity::assignNumber(int n)
+{
+    number = n;
+}
+
+int Entity::getNumber()
+{
+    return number;
+}
+
 /* END OF FILE */

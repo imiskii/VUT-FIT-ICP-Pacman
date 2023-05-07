@@ -15,6 +15,7 @@
 #include <QTimer>
 #include <QThread>
 #include <ctime>
+#include <string>
 #include "../consts.h"
 #include "../View/gamepage.h"
 #include "FileLoader.h"
@@ -44,7 +45,7 @@ private:
     int _GhostsSpeed;               ///< ghosts transition time to a new field in milliseconds
     vector<pair<int, int>> _keysPos;///< positions of keys in map
     QTimer GhostTimer;              ///< timer controlling ghost movement
-
+    Logger logger;                  ///< for logging games
 
     /**
      * @brief _setNewPosition update given position (x,y) based on given direction

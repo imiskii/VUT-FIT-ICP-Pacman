@@ -1,8 +1,8 @@
 /**
  * @file replaypage.cpp
- * @author 
+ * @author
  * @brief Replay view
- * 
+ *
  */
 
 #include "replaypage.h"

@@ -35,7 +35,8 @@ public:
     void setMoving(bool state);
     bool isMovable();
     void setMovable(bool state);
-
+    void assignNumber(int n);
+    int getNumber();
 
 private:
     int x_pos;                  //< current pacman x-position
@@ -46,7 +47,7 @@ private:
     direction _nextDirection;   //< next pacman movement direction - allows save the next change of direction
     bool _moving;               //< true if pacman is currently moving false if it is not moving
     bool movable;               //< if pacman dies, it cannot be moved until next round starts
-
+    int number;                 //< used to distinguish ghosts for logging purposes
 };
 
 #endif // ENTITY_H
