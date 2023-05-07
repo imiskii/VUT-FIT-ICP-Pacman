@@ -17,7 +17,7 @@
 #include "../View/gamepage.h"
 #include "FileLoader.h"
 #include "GameMap.h"
-#include "Pacman.h"
+#include "Entity.h"
 #include "Logger.h"
 
 using namespace std;
@@ -36,7 +36,8 @@ private:
     unsigned short _gameLevel;      ///< Current level of the game
     gamepage *_GameView;            ///< Game View
     GameMap *_Map;                  ///< Game map/field
-    Pacman *_Pacman;                ///< object representing pacman
+    Entity *_Pacman;                ///< object representing pacman
+    vector<Entity> Ghosts;          ///< vector of ghost positions in model
     int _PacmanSpeed;               ///< pacman transition time to a new field in milliseconds
     int _GhostsSpeed;               ///< ghosts transition time to a new field in milliseconds
     vector<pair<int, int>> _keysPos;///< positions of keys in map

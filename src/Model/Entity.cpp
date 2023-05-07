@@ -1,13 +1,13 @@
 /**
- * @file Pacman.cpp
- * @author
- * @brief Class representing Pac-Man
- * 
+ * @file Entity.cpp
+ * @author Michal Las (xlasmi00), Adam Lazik (xlazik00)
+ * @brief Class representing Pac-Man and ghosts in model
+ *
  */
 
-#include "Pacman.h"
+#include "Entity.h"
 
-Pacman::Pacman(int x, int y)
+Entity::Entity(int x, int y)
 {
     this->x_pos = x;
     this->y_pos = y;
@@ -20,81 +20,81 @@ Pacman::Pacman(int x, int y)
 }
 
 
-Pacman::~Pacman()
+Entity::~Entity()
 {
 
 }
 
 
-int Pacman::x()
+int Entity::x()
 {
     return this->x_pos;
 }
 
 
-int Pacman::y()
+int Entity::y()
 {
     return this->y_pos;
 }
 
 
-int Pacman::next_x()
+int Entity::next_x()
 {
     return this->x_next_pos;
 }
 
 
-int Pacman::next_y()
+int Entity::next_y()
 {
     return this->y_next_pos;
 }
 
 
-void Pacman::setCurrPos(int x, int y)
+void Entity::setCurrPos(int x, int y)
 {
     this->x_pos = x;
     this->y_pos = y;
 }
 
 
-void Pacman::setNextPos(int x, int y)
+void Entity::setNextPos(int x, int y)
 {
     this->x_next_pos = x;
     this->y_next_pos = y;
 }
 
 
-direction Pacman::getCurrDirection()
+direction Entity::getCurrDirection()
 {
     return this->_currDirection;
 }
 
 
-direction Pacman::getNextDirection()
+direction Entity::getNextDirection()
 {
     return this->_nextDirection;
 }
 
 
-void Pacman::setCurrDirection(direction dr)
+void Entity::setCurrDirection(direction dr)
 {
     this->_currDirection = dr;
 }
 
 
-void Pacman::setNextDirection(direction dr)
+void Entity::setNextDirection(direction dr)
 {
     this->_nextDirection = dr;
 }
 
 
-bool Pacman::isMoving()
+bool Entity::isMoving()
 {
     return this->_moving;
 }
 
 
-void Pacman::setMoving(bool state)
+void Entity::setMoving(bool state)
 {
     this->_moving = state;
 }

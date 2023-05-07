@@ -1,12 +1,12 @@
 /**
- * @file Pacman.h
+ * @file Entity.h
  * @author
- * @brief header file for Pacman.cpp
- * 
+ * @brief header file for Entity.cpp
+ *
  */
 
-#ifndef PACMAN_H
-#define PACMAN_H
+#ifndef ENTITY_H
+#define ENTITY_H
 
 #include <utility>
 #include "../consts.h"
@@ -14,11 +14,11 @@
 using namespace std;
 
 
-class Pacman
+class Entity
 {
 public:
-    Pacman(int x, int y);
-    ~Pacman();
+    Entity(int x, int y);
+    ~Entity();
     int x();
     int y();
     int next_x();
@@ -44,7 +44,7 @@ private:
 
 };
 
-#endif // PACMAN_H
+#endif // ENTITY_H
 
 
 /* END OF FILE */

@@ -13,7 +13,7 @@ SOURCES += \
     Model/GameMap.cpp \
     Model/FileLoader.cpp \
     Model/GameModel.cpp \
-    Model/Pacman.cpp \
+    Model/Entity.cpp \
     Model/ReplayModel.cpp \
     View/GameItems.cpp \
     View/gamepage.cpp \
@@ -27,7 +27,7 @@ HEADERS += \
     Model/GameMap.h \
     Model/FileLoader.h \
     Model/GameModel.h \
-    Model/Pacman.h \
+    Model/Entity.h \
     Model/ReplayModel.h \
     View/GameItems.h \
     View/gamepage.h \

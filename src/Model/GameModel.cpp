@@ -96,7 +96,10 @@ void GameModel::BuildMap(QString map)
     }
 
     MapItems itemsPos = this->_Map->getMapItems();
-    this->_Pacman = new Pacman(itemsPos.startPos.first, itemsPos.startPos.second);
+    this->_Pacman = new Entity(itemsPos.startPos.first, itemsPos.startPos.second);
+    for (auto &ghost: itemsPos.ghostsPos) {
+        Ghosts.push_back(Entity(ghost.first, ghost.second));
+    }
     this->_keysPos = itemsPos.keysPos;
 
     emit DisplayMap(this->_Map->getMapField());
@@ -258,8 +261,11 @@ void GameModel::GoOnNextLevel()
     }
 
     MapItems itemsPos = this->_Map->getMapItems();
-    this->_Pacman = new Pacman(itemsPos.startPos.first, itemsPos.startPos.second);
-    // @TODO: Add ghosts
+    this->_Pacman = new Entity(itemsPos.startPos.first, itemsPos.startPos.second);
+    Ghosts.clear();
+    for (auto &ghost: itemsPos.ghostsPos) {
+        Ghosts.push_back(Entity(ghost.first, ghost.second));
+    }
     this->_keysPos = itemsPos.keysPos;
     emit DeleteMap();
     emit DisplayMap(this->_Map->getMapField());
@@ -283,12 +289,13 @@ vector<pair<int, int>> GameModel::GetFreeNeighbors(int x, int y)
 void GameModel::MoveGhosts()
 {
     vector<pair<int ,int>> newpos;
-    for(auto &ghost: _Map->getMapItems().ghostsPos)
+    for(auto &ghost: Ghosts)
     {
-        vector <pair<int, int>> freeNeighbors = GetFreeNeighbors(ghost.first, ghost.second);
+        vector <pair<int, int>> freeNeighbors = GetFreeNeighbors(ghost.x(), ghost.y());
         int random_index = rand() % freeNeighbors.size();
-        ghost = freeNeighbors[random_index];
-        newpos.push_back(ghost);
+        auto &newghostpos = freeNeighbors[random_index];
+        ghost.setCurrPos(newghostpos.first, newghostpos.second);
+        newpos.push_back(newghostpos);
     }
     emit ChangeGhostPositions(newpos, _GhostsSpeed);
 }
