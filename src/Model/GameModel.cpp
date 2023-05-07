@@ -158,7 +158,7 @@ void GameModel::MovePacman(direction dr)
             t_x = this->_Pacman->x();
             t_y = this->_Pacman->y();
             this->_setNewPosition(currentPacmanDirection, t_x, t_y);
-            if (!this->_Map->isWall(t_x, t_y))
+            if (!this->_Map->isWall(t_x, t_y) && currentPacmanDirection != NONE)
             {
                 this->_Pacman->setNextPos(t_x, t_y);
                 this->_Pacman->setMoving(true);
