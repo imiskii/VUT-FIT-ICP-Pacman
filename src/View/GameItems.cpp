@@ -76,7 +76,6 @@ PacmanItem::~PacmanItem()
     delete this->_mouthSpanAnimation;
 }
 
-
 void PacmanItem::moveTo(QPointF destPos, int speed, direction dr)
 {
     static int movementProgress; // store animation time that remains to complete the full pacman step
@@ -125,7 +124,6 @@ void PacmanItem::moveTo(QPointF destPos, int speed, direction dr)
     this->_mouthAnimation(speed);
 }
 
-
 void PacmanItem::moveAnimationFinished()
 {
     emit moveFinished();
@@ -166,7 +164,7 @@ void PacmanItem::deathAnimation()
     this->_mouthStartAnimation->start();
     this->_mouthSpanAnimation->start();
 
-    // restore animation direction
+    // restore animation direction and values
     this->_mouthStartAnimation->setDirection(QAbstractAnimation::Backward);
     this->_mouthSpanAnimation->setDirection(QAbstractAnimation::Backward);
     this->_mouthStartAnimation->setEndValue(0);
@@ -214,7 +212,7 @@ GhostItem::GhostItem(QPixmap &pixmap, QPointF position, qreal &width, qreal &hei
 
 GhostItem::~GhostItem()
 {
-
+    delete _moveAnimation;
 }
 
 

@@ -1,6 +1,6 @@
 /**
  * @file ReplayModel.h
- * @author Michal Las (xlasmi00)
+ * @author Adam Lazík (xlazik00)
  * @brief header file for ReplayModel.cpp
  *
  */
@@ -11,6 +11,8 @@
 #include <QObject>
 #include <QFileDialog>
 #include <iostream>
+#include <sstream>
+#include <QTimer>
 #include "../View/replaypage.h"
 #include "FileLoader.h"
 #include "GameMap.h"
@@ -33,7 +35,12 @@ private:
     int _PacmanSpeed;               ///< pacman transition time to a new field in milliseconds
     int _GhostsSpeed;               ///< ghosts transition time to a new field in milliseconds
     vector<pair<int, int>> _keysPos;///< positions of keys in map
+    vector<string> _game;           ///< loaded log file of the game
+    stringstream _moves;            ///< logged moves loaded from the log
+    QTimer GhostTimer;              ///< timer controlling ghost movement
+    size_t _index;                  ///< index to line in log file
 
+    direction directionDecode(char d);
 
 signals:
     /**
@@ -54,6 +61,8 @@ signals:
      */
     void ChangePage(RVPageCode page);
 
+    void ChangePacmanPosition(direction d, int speed);
+
 
 public slots:
     /**
@@ -62,6 +71,8 @@ public slots:
     void SelectReplayFile();
 
     void BuildMap(QString map);
+
+    void MoveGhosts();
 
 };
 

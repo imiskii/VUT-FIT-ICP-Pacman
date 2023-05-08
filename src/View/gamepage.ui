@@ -274,6 +274,9 @@
              <property name="styleSheet">
               <string notr="true">background: #355070; color: #FC2F00;</string>
              </property>
+             <property name="digitCount">
+              <number>1</number>
+             </property>
             </widget>
            </item>
            <item>

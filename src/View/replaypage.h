@@ -1,6 +1,6 @@
 /**
  * @file replaypage.h
- * @author Michal Las (xlasmi00)
+ * @author Adam Lazík (xlazik00)
  * @brief header file for replaypage.cpp
  *
  */
@@ -108,6 +108,8 @@ public slots:
      * @param gameField 2D array representing game field
      */
     void ShowGameField(std::vector<std::vector<char>> &gameField);
+
+    void UpdatePacmanPosition(direction dr, int speed);
 
 
 private slots:

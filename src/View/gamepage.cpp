@@ -1,6 +1,6 @@
 /**
  * @file gamepage.cpp
- * @author Michal Ľaš (xlasmi00), Adam Lazik (xlazik00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazík (xlazik00)
  * @brief Game View
  *
  */
@@ -13,7 +13,6 @@ gamepage::gamepage(QWidget *parent) :
     ui(new Ui::gamepage)
 {
     ui->setupUi(this);
-    this->setFocus();
 
     this->_scene = new QGraphicsScene(ui->GameGraphicsView);
 
@@ -29,6 +28,10 @@ gamepage::~gamepage()
     {
         this->_scene->removeItem(item);
         delete item;
+    }
+    if (_pacman != nullptr)
+    {
+        delete _pacman;
     }
     delete this->_scene;
 }
@@ -120,8 +123,6 @@ void gamepage::ShowGameField(std::vector<std::vector<char>> &gameField)
     {
         this->_cellSize = (ui->GameGraphicsView->size().height()-1)/this->_mapRowCount; // scene height / count rows
     }
-    // create array of ghosts
-    srand(RANDOM_SEED);
     std::vector<std::string> ghosts = {_RED_GHOST_PATH, _YELLOW_GHOST_PATH, _BLUE_GHOST_PATH};
 
     // Create items and add them to scene
@@ -287,7 +288,7 @@ void gamepage::updateScore(int number)
 
 void gamepage::updateLives(int number)
 {
-   ui->LivesLabel->setText(QString::fromStdString("Lives: " + to_string(number)));
+   ui->LivesCounter->display(number);
 }
 
 /* END OF FILE */

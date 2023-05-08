@@ -1,6 +1,6 @@
 /**
  * @file GameModel.h
- * @author Michal Ľaš (xlasmi00), Adam Lazik (xlazik00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazík (xlazik00)
  * @brief header file for GameModel.cpp
  *
  */

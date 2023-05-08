@@ -1,6 +1,6 @@
 /**
  * @file GameModel.cpp
- * @author Michal Ľaš (xlasmi00), Adam Lazik (xlazik00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazík (xlazik00)
  * @brief Game Model
  *
  */
@@ -19,8 +19,8 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     _score = 0;
     _lives = 3;
 
-    // Animation needs 15 extra miliseconds to finish and be ready for the next movement
-    GhostTimer.setInterval(_GhostsSpeed + 15);
+    // Animation needs 30 extra miliseconds to finish and be ready for the next movement
+    GhostTimer.setInterval(_GhostsSpeed + 30);
     connect(&GhostTimer, &QTimer::timeout, this, &GameModel::MoveGhosts);
 
     connect(this, &GameModel::AddMapNameToCombobox, this->_GameView, &gamepage::AddMapName);
@@ -35,6 +35,7 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     connect(this, &GameModel::ChangeGhostPositions, _GameView, &gamepage::updateGhostPositions);
     connect(this, &GameModel::Death, _GameView, &gamepage::PacManDeath);
     connect(this, &GameModel::updateScore, _GameView, &gamepage::updateScore);
+    connect(this, &GameModel::updateLives, _GameView, &gamepage::updateLives);
 
     srand(time(nullptr)); // seed randomized ghost movement
 
@@ -48,8 +49,15 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
 
 GameModel::~GameModel()
 {
-    delete this->_Map;
-    delete this->_Pacman;
+    delete _GameView;
+    if (_Map != nullptr)
+    {
+        delete _Map;
+    }
+    if (_Pacman != nullptr)
+    {
+        delete _Pacman;
+    }
 }
 
 
@@ -78,6 +86,12 @@ void GameModel::BuildMap(QString map)
         delete this->_Map;
         this->_Map = new GameMap();
 
+        _lives = 3;
+        _score = 0;
+        this->_PacmanSpeed = LEVEL_1_SPEED;
+        this->_GhostsSpeed = LEVEL_1_SPEED;
+        emit updateScore(_score);
+
         if (!map.contains("/")) // it is not full path
         {
             map = _MAP_FILES + map + "." + _MAP_REPLAY_FILE_EXT;
@@ -100,9 +114,10 @@ void GameModel::BuildMap(QString map)
         logger.createLogFile(fileLines);
     }
 
+    logger.log(to_string(_PacmanSpeed)); // log entity speed
+
     MapItems itemsPos = this->_Map->getMapItems();
     this->_Pacman = new Entity(itemsPos.startPos.first, itemsPos.startPos.second);
-    logger.log("P " + to_string(_Pacman->x()) + " " + to_string(_Pacman->y()));
     for (size_t i = 0; i < itemsPos.ghostsPos.size(); ++i) {
         auto &ghost = itemsPos.ghostsPos[i];
         Entity GhostModel(ghost.first, ghost.second);
@@ -114,6 +129,7 @@ void GameModel::BuildMap(QString map)
 
     emit DisplayMap(this->_Map->getMapField());
     emit ChangePage(GVPageCode::PLAY_GAME);
+    emit updateLives(_lives);
     GhostTimer.start();
 }
 
@@ -244,6 +260,7 @@ void GameModel::_checkPosition(int x, int y)
     {
         // Game ends
         _score += 1;
+        _GameView->clearFocus();
         emit updateScore(_score);
         emit ChangePage(GVPageCode::GAME_END);
     }
@@ -257,8 +274,8 @@ void GameModel::LeaveGame()
     this->_PacmanSpeed = LEVEL_1_SPEED;
     this->_GhostsSpeed = LEVEL_1_SPEED;
     this->_gameLevel = 1;
-    // Animation needs 15 extra miliseconds to finish and be ready for the next movement
-    GhostTimer.setInterval(_GhostsSpeed + 15);
+    // Animation needs 30 extra miliseconds to finish and be ready for the next movement
+    GhostTimer.setInterval(_GhostsSpeed + 30);
     emit DeleteMap();
     emit ChangePage(GVPageCode::GAME_LOBBY);
 }
@@ -271,8 +288,8 @@ void GameModel::GoOnNextLevel()
     {
         this->_PacmanSpeed -= LEVEL_DIFF;
         this->_GhostsSpeed -= LEVEL_DIFF;
-        // Animation needs 15 extra miliseconds to finish and be ready for the next movement
-        GhostTimer.setInterval(_GhostsSpeed + 15);
+        // Animation needs 30 extra miliseconds to finish and be ready for the next movement
+        GhostTimer.setInterval(_GhostsSpeed + 30);
     }
 
     MapItems itemsPos = this->_Map->getMapItems();
@@ -304,7 +321,25 @@ vector<pair<int, int>> GameModel::GetFreeNeighbors(int x, int y)
 void GameModel::MoveGhosts()
 {
     logger.log("T"); // Indicate that positions are in a new "tick"
-    logger.log("P " + to_string(_Pacman->next_x()) + " " + to_string(_Pacman->next_y())); // log pacman movement together with ghost movement
+    string dir;
+    switch(_Pacman->getNextDirection())
+    {
+    case UP:
+        dir = "U";
+        break;
+    case DOWN:
+        dir = "D";
+        break;
+    case LEFT:
+        dir = "L";
+        break;
+    case RIGHT:
+        dir = "R";
+        break;
+    case NONE:
+        dir = "N";
+    }
+    logger.log("P " + dir); // log pacman movement together with ghost movement
     vector<pair<int ,int>> newpos;
     for(auto &ghost: Ghosts)
     {
@@ -324,8 +359,13 @@ void GameModel::MoveGhosts()
                 _lives -= 1;
                 emit updateLives(_lives);
                 if (_lives == 0) {
+                    _lives = 3;
                     _score = 0;
+                    this->_PacmanSpeed = LEVEL_1_SPEED;
+                    this->_GhostsSpeed = LEVEL_1_SPEED;
+                    GhostTimer.setInterval(_GhostsSpeed + 30);
                     emit updateScore(_score);
+                    emit updateLives(_lives);
                 }
                 MapItems itemsPos = this->_Map->getMapItems();
                 delete this->_Pacman;

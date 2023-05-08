@@ -1,6 +1,6 @@
 /**
  * @file Entity.cpp
- * @author Michal Las (xlasmi00), Adam Lazik (xlazik00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazík (xlazik00)
  * @brief Class representing Pac-Man and ghosts in model
  *
  */

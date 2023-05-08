@@ -1,6 +1,6 @@
 /**
  * @file Logger.cpp
- * @author Adam Lazik (xlazik00)
+ * @author Adam Lazík (xlazik00)
  * @brief Declaration of logger class for logging games.
  */
 

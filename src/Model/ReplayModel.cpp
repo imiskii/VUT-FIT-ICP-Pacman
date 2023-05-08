@@ -1,6 +1,6 @@
 /**
  * @file ReplayModel.cpp
- * @author Michal Las (xlasmi00)
+ * @author Adam Lazík (xlazik00)
  * @brief Replay Model
  *
  */
@@ -11,6 +11,7 @@ ReplayModel::ReplayModel(QObject *parent, replaypage *ReplayView)
     : QObject{parent}
 {
     this->_ReplayView = ReplayView;
+    _Map = nullptr;
 
     connect(this, &ReplayModel::AddReplayToCombobox, this->_ReplayView, &replaypage::AddReplayName);
     // Load map names
@@ -22,6 +23,9 @@ ReplayModel::ReplayModel(QObject *parent, replaypage *ReplayView)
 
     connect(this, &ReplayModel::DisplayMap, this->_ReplayView, &replaypage::ShowGameField);
     connect(this, &ReplayModel::ChangePage, this->_ReplayView, &replaypage::MoveOnPage);
+    connect(this, &ReplayModel::ChangePacmanPosition, this->_ReplayView, &replaypage::UpdatePacmanPosition);
+
+    connect(&GhostTimer, &QTimer::timeout, this, &ReplayModel::MoveGhosts);
 }
 
 
@@ -61,15 +65,14 @@ void ReplayModel::BuildMap(QString map)
             map = "../../logs/" + map + "." + _MAP_REPLAY_FILE_EXT;
         }
 
-        std::vector<std::string> fileLines;
         // Read lines from map file
-        if (!ReadLinesFromFile(fileLines, map.toLocal8Bit().constData())) // reading operation failed
+        if (!ReadLinesFromFile(_game, map.toLocal8Bit().constData())) // reading operation failed
         {
             cerr << "Unable to find given map file !" << endl;
             return;
         }
 
-        if (!this->_Map->loadMap(fileLines, mapName))
+        if (!this->_Map->loadMap(_game, mapName))
         {
             cerr << "The map file is corrupted !" << endl;
             return;
@@ -88,6 +91,50 @@ void ReplayModel::BuildMap(QString map)
 
     emit DisplayMap(this->_Map->getMapField());
     emit ChangePage(RVPageCode::REPLAY_GAME);
+
+    _index = stoi(_game[0].substr(0, _game[0].find(' '))) + 1; // line with first instruction
+    _PacmanSpeed = _GhostsSpeed = stoi(_game[_index++]); // extract entity speed
+
+    GhostTimer.setInterval(_GhostsSpeed + 15);
+
+    GhostTimer.start();
+}
+
+direction ReplayModel::directionDecode(char d)
+{
+    switch(d)
+    {
+    case 'U':
+        return UP;
+    case 'D':
+        return DOWN;
+    case 'L':
+        return LEFT;
+    case 'R':
+        return RIGHT;
+    default:
+        return NONE;
+    }
+}
+
+void ReplayModel::MoveGhosts()
+{
+    while (_index < _game.size())
+    {
+        string &line = _game[_index];
+        string tmp;
+        switch(line[0])
+        {
+        case 'P':
+            emit ChangePacmanPosition(directionDecode(line[3]), _PacmanSpeed);
+            break;
+        case 'T':
+            ++_index;
+            return;
+        }
+        ++_index;
+    }
+    GhostTimer.stop();
 }
 
 /* END OF FILE */

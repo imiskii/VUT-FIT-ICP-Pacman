@@ -66,6 +66,10 @@ bool GameController::eventFilter(QObject *obj, QEvent *event)
 
 void GameController::_KeyPressEvent(QKeyEvent *event)
 {
+    if (!_GameView->hasFocus())
+    {
+        return;
+    }
     switch (event->key())
     {
     case Qt::Key_W:
@@ -112,9 +116,11 @@ void GameController::GVHandleAction(GVActionCode code)
 {
     switch (code) {
     case GVActionCode::CLICKED_BUTTON_EXIT:
+        _GameView->clearFocus();
         emit ExitGame();
         break;
     case GVActionCode::CLICKED_BUTTON_NEXTLEVEL:
+        _GameView->setFocus();
         emit NextGame();
         break;
     case GVActionCode::CLICKED_BUTTON_BACK:
@@ -152,6 +158,7 @@ void GameController::RVHandleAction(RVActionCode code)
 
 void GameController::PlayButtonAction(QString choosenMap)
 {
+    _GameView->setFocus();
     emit StartGame(choosenMap);
 }
 

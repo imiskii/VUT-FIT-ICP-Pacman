@@ -6,7 +6,7 @@
 
 TOPACK=Makefile README.txt doc examples src/build src/Controller src/Model src/View src/ICP-pacman.pro src/main.cpp src/consts.h
 TOCLEAN=src/build/* src/build/.qmake.stash src/build/.qtc_clangd *.zip doc/html
-
+POINTS_DISTRIBUTION=30-70
 
 all: compile
 	cd src/build && make
@@ -29,4 +29,4 @@ clean:
 
 
 pack: clean
-	zip -r xlazik00_xlasmi00 $(TOPACK)
+	zip -r xlazik00_xlasmi00-$(POINTS_DISTRIBUTION) $(TOPACK)

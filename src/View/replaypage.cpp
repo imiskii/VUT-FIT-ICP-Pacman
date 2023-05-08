@@ -1,6 +1,6 @@
 /**
  * @file replaypage.cpp
- * @author Michal Las (xlasmi00)
+ * @author Adam Lazík (xlazik00)
  * @brief Replay view
  *
  */
@@ -16,6 +16,9 @@ replaypage::replaypage(QWidget *parent) :
     ui->ReplayGraphicsView->installEventFilter(this);
 
     this->_scene = new QGraphicsScene(ui->ReplayGraphicsView);
+
+    this->_pacman = nullptr;
+    this->_cellSize = 0;
 }
 
 
@@ -34,6 +37,8 @@ bool replaypage::eventFilter(QObject* obj, QEvent* event)
 replaypage::~replaypage()
 {
     delete ui;
+    delete _scene;
+    if (_pacman != nullptr);
 }
 
 
@@ -97,8 +102,6 @@ void replaypage::ShowGameField(std::vector<std::vector<char>> &gameField)
     {
         this->_cellSize = (ui->ReplayGraphicsView->size().height()-1)/this->_mapRowCount; // scene height / count rows
     }
-    // create array of ghosts
-    srand(RANDOM_SEED);
     std::vector<std::string> ghosts = {_RED_GHOST_PATH, _YELLOW_GHOST_PATH, _BLUE_GHOST_PATH};
 
     // Create items and add them to scene
@@ -145,6 +148,27 @@ void replaypage::ShowGameField(std::vector<std::vector<char>> &gameField)
     }
 
     ui->ReplayGraphicsView->setScene(this->_scene);
+}
+
+void replaypage::UpdatePacmanPosition(direction dr, int speed)
+{
+    switch (dr)
+    {
+    case direction::UP:
+        this->_pacman->moveTo(this->_pacman->pos() + QPointF(0, -this->_cellSize), speed, dr);
+        break;
+    case direction::LEFT:
+        this->_pacman->moveTo(this->_pacman->pos() + QPointF(-this->_cellSize, 0), speed, dr);
+        break;
+    case direction::DOWN:
+        this->_pacman->moveTo(this->_pacman->pos() + QPointF(0, this->_cellSize), speed, dr);
+        break;
+    case direction::RIGHT:
+        this->_pacman->moveTo(this->_pacman->pos() + QPointF(this->_cellSize, 0), speed, dr);
+        break;
+    default:
+        break;
+    }
 }
 
 void replaypage::PacmanMovementFinished()

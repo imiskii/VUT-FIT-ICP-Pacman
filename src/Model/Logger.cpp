@@ -1,6 +1,6 @@
 /**
  * @file Logger.cpp
- * @author Adam Lazik (xlazik00)
+ * @author Adam Lazík (xlazik00)
  * @brief Implementation of logger class for logging games.
  */
 
@@ -34,7 +34,7 @@ bool Logger::createLogFile(vector<string> &fileLines)
 
     // Format timestamp as string
     stringstream filename;
-    filename << "../../logs/log_" << std::put_time(std::localtime(&timestamp), "%Y-%m-%d_%H:%M:%S") << ".txt";
+    filename << "../../logs/game_" << std::put_time(std::localtime(&timestamp), "%Y-%m-%d_%H:%M:%S") << ".txt";
 
     logFile = ofstream(filename.str());
     if (!logFile.is_open())
