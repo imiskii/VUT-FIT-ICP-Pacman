@@ -59,6 +59,7 @@ public:
      */
     explicit gamepage(QWidget *parent = nullptr);
     ~gamepage();
+    Ui::gamepage *getUI();
 
 
 protected:

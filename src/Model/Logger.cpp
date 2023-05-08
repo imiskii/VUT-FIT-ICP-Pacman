@@ -6,6 +6,11 @@
 
 #include "Logger.h"
 
+Logger::Logger()
+{
+    _enabled = false;
+}
+
 Logger::~Logger()
 {
     if(logFile.is_open())
@@ -16,6 +21,11 @@ Logger::~Logger()
 
 bool Logger::createLogFile(vector<string> &fileLines)
 {
+    if(!_enabled)
+    {
+        return true;
+    }
+
     if(!filesystem::is_directory("../../logs"))
     {
         if(!filesystem::create_directory("../../logs"))
@@ -54,5 +64,18 @@ bool Logger::createLogFile(vector<string> &fileLines)
 
 void Logger::log(string msg)
 {
-    logFile << msg << endl;
+    if (_enabled)
+    {
+        logFile << msg << endl;
+    }
+}
+
+void Logger::enable()
+{
+    _enabled = true;
+}
+
+void Logger::disable()
+{
+    _enabled = false;
 }

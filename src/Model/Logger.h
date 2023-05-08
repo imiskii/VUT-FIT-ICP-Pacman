@@ -24,9 +24,21 @@ class Logger
 {
 private:
     ofstream logFile; ///< file to which the game is being logged
+    bool _enabled;    ///< flag indicating whether logger is enabled
 
 public:
+    Logger();
     ~Logger();
+
+    /**
+     * @brief enable game logging
+     */
+    void enable();
+
+    /**
+     * @brief disable game logging
+     */
+    void disable();
 
     /**
      * @brief create a new file in logs/ directory with the current timestamp

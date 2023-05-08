@@ -251,4 +251,10 @@ void gamepage::updateLives(int number)
    ui->LivesCounter->display(number);
 }
 
+
+Ui::gamepage *gamepage::getUI()
+{
+    return ui;
+}
+
 /* END OF FILE */

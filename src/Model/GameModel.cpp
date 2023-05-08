@@ -73,6 +73,11 @@ void GameModel::SelectMapFile()
 
 void GameModel::BuildMap(QString map)
 {
+    if (_GameView->getUI()->RecordGameCheck->isChecked())
+    {
+        logger.enable();
+    }
+
     if (this->_Map == nullptr)
     {
         this->_Map = new GameMap();
@@ -269,6 +274,7 @@ void GameModel::_checkPosition(int x, int y)
 
 void GameModel::LeaveGame()
 {
+    logger.disable();
     GhostTimer.stop();
     delete this->_Pacman;
     _Pacman = nullptr;
@@ -374,9 +380,10 @@ void GameModel::MoveGhosts()
                 MapItems itemsPos = this->_Map->getMapItems();
                 delete this->_Pacman;
                 this->_Pacman = new Entity(itemsPos.startPos.first, itemsPos.startPos.second);
-                Ghosts.clear();
-                for (auto &ghost: itemsPos.ghostsPos) {
-                    Ghosts.push_back(Entity(ghost.first, ghost.second));
+                for (size_t i = 0; i < itemsPos.ghostsPos.size(); ++i)
+                {
+                    auto &ghost = itemsPos.ghostsPos[i];
+                    Ghosts[i].setCurrPos(ghost.first, ghost.second);
                 }
                 this->_keysPos = itemsPos.keysPos;
                 emit DeleteMap();
