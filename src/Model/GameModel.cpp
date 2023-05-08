@@ -271,6 +271,10 @@ void GameModel::LeaveGame()
 {
     GhostTimer.stop();
     delete this->_Pacman;
+    _Pacman = nullptr;
+    delete this->_Map;
+    _Map = nullptr;
+    Ghosts.clear();
     this->_PacmanSpeed = LEVEL_1_SPEED;
     this->_GhostsSpeed = LEVEL_1_SPEED;
     this->_gameLevel = 1;
