@@ -1,6 +1,6 @@
 /**
  * @file gamepage.h
- * @author Michal Ľaš (xlasmi00), Adam Lazík (xlazik00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazík (xlazik00) [deleteScene, updateScore, updateLives]
  * @brief header file for gamepage.cpp
  */
 

@@ -24,10 +24,12 @@ Michal Ľaš (xlasmi00)
 
 # Unimplemented functionality
 - Game replaying
+- Pacman movement using mouse
 
 # Assigned tasks
 
 asignee  | task                                     | status
+xlasmi00 | create GUI, pages and navigation         | completed
 xlasmi00 | create animations for pacman and ghosts  | completed
 xlasmi00 | create map and model for displying maps  | completed
 xlasmi00 | implement pacman movement using WASD     | completed
@@ -39,6 +41,15 @@ xlazik00 | implement ghost movement                 | completed
 xlazik00 | implement lives and score                | completed
 xlazik00 | implement game replay                    | not completed
 xlazik00 | implement pacman movement using mouse    | not completed
+
+
+# Files documentation
+
+The author is listed in the header of each file. (automatically generated 
+files do not have headers or the author is not mentioned in them). 
+If both authors are listed in the header, one of the authors also lists the 
+methods/functions he implemented (the other author developed everything else).
+
 
 # Points distribution
 

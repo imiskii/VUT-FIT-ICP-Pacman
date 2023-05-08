@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- File: gamepage.ui -->
+<!-- Author: Michal Ľaš (xlasmi00) -->
+<!-- Brief: graphical interface for gamepage -->
+
 <ui version="4.0">
  <class>gamepage</class>
  <widget class="QWidget" name="gamepage">

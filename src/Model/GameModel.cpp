@@ -1,6 +1,6 @@
 /**
  * @file GameModel.cpp
- * @author Michal Ľaš (xlasmi00), Adam Lazík (xlazik00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazík (xlazik00) [MoveGhosts, GetFreeNeighbors]
  * @brief Game Model
  *
  */

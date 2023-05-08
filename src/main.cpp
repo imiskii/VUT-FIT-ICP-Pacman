@@ -1,3 +1,9 @@
+/**
+ * @file main.cpp
+ * @author Michal Ľaš (xlasmi00)
+ * @brief Pacmain main file
+ */
+
 #include "View/mainwindow.h"
 #include "View/gamepage.h"
 #include "View/replaypage.h"
