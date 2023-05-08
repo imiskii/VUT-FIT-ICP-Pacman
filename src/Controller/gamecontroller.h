@@ -102,6 +102,8 @@ signals:
      */
     void NextGame();
 
+    void ReplayGame(QString chosenMap);
+
 
 
 public slots:
@@ -125,6 +127,8 @@ public slots:
      * @param choosenMap map choosen by user
      */
     void PlayButtonAction(QString choosenMap);
+
+    void ReplayButtonAction(QString chosenMap);
 };
 
 #endif // GAMECONTROLLER_H

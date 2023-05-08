@@ -10,6 +10,7 @@
 
 #include <QWidget>
 #include "gamepage.h"
+#include <iostream>
 
 /**
  * @brief The RVPageCode enum application pages codes in ReplayView
@@ -50,12 +51,22 @@ public:
      * @brief replaypage constructor
      * @param parent
      */
-    explicit replaypage(QWidget *parent = nullptr);
+    replaypage(QWidget *parent = nullptr);
     ~replaypage();
 
 private:
     Ui::replaypage *ui;
+    QGraphicsScene *_scene;             ///< Game scene
+    unsigned _mapRowCount;              ///< number of rows in map
+    unsigned _mapColumnCount;           ///< number of columns in map
+    PacmanItem *_pacman;                ///< Pacman view object
+    std::vector<GhostItem*> _ghosts;    ///< Vector with ghost objects
+    std::vector<KeyItem*> _keys;        ///< Vector with keys objects
+    TargetItem *_target;                ///< Target item
+    qreal _cellSize;                    ///< Size of one cell in GraphicView
 
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 signals:
     /**
@@ -63,10 +74,22 @@ signals:
      * @param code code of action
      */
     void NotifyUserAction(RVActionCode code);
+
     /**
      * @brief GoOnHomePage signal to change page on home page
      */
     void GoOnHomePage();
+
+    /**
+     * @brief notify Model that pacman movement was finished
+     */
+    void PacmanMoveFinished();
+
+    /**
+     * @brief Notify controller that player wants to replay a game
+     * @param choosenMap name of map selected by user
+     */
+    void ReplayButtonClicked(QString choosenMap);
 
 
 public slots:
@@ -80,6 +103,11 @@ public slots:
      * @param replayName name of new replay
      */
     void AddReplayName(QString replayName);
+    /**
+     * @brief Create new game field and add it to scene
+     * @param gameField 2D array representing game field
+     */
+    void ShowGameField(std::vector<std::vector<char>> &gameField);
 
 
 private slots:
@@ -99,6 +127,8 @@ private slots:
      * @brief on_ChooseReplayFileButton_clicked sends signal to Controller that 'Choose Replay' button was clicked
      */
     void on_ChooseReplayFileButton_clicked();
+
+    void PacmanMovementFinished();
 };
 
 #endif // REPLAYPAGE_H

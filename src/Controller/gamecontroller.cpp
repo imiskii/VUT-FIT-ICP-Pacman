@@ -26,6 +26,7 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
     connect(this->_GameView, &gamepage::NotifyUserAction, this, &GameController::GVHandleAction);
     connect(this->_GameView, &gamepage::PlayButtonClicked, this, &GameController::PlayButtonAction);
     connect(this->_ReplayView, &replaypage::NotifyUserAction, this, &GameController::RVHandleAction);
+    connect(this->_ReplayView, &replaypage::ReplayButtonClicked, this, &GameController::ReplayButtonAction);
 
     connect(this, &GameController::ChangeMVPage, this->_MainView, &MainWindow::MoveOnPage);
     connect(this, &GameController::QuitApp, this->_MainView, &MainWindow::QuitApp);
@@ -42,6 +43,7 @@ GameController::GameController(QObject *parent, MainWindow *MainView, gamepage *
     connect(this, &GameController::ExitGame, this->_GameM, &GameModel::LeaveGame);
     connect(this, &GameController::NextGame, this->_GameM, &GameModel::GoOnNextLevel);
     connect(this, &GameController::ChooseReplayFile, this->_ReplayM, &ReplayModel::SelectReplayFile);
+    connect(this, &GameController::ReplayGame, this->_ReplayM, &ReplayModel::BuildMap);
 }
 
 
@@ -151,6 +153,11 @@ void GameController::RVHandleAction(RVActionCode code)
 void GameController::PlayButtonAction(QString choosenMap)
 {
     emit StartGame(choosenMap);
+}
+
+void GameController::ReplayButtonAction(QString chosenMap)
+{
+    emit ReplayGame(chosenMap);
 }
 
 

@@ -61,7 +61,7 @@ public:
     ~gamepage();
 
 
-private:
+protected:
     Ui::gamepage *ui;                   ///< GamePage UI
     QGraphicsScene *_scene;             ///< Game scene
     unsigned _mapRowCount;              ///< number of rows in map
