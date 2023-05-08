@@ -1,6 +1,6 @@
 /**
  * @file GameModel.cpp
- * @author Michal Ľaš (xlasmi00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazik (xlazik00)
  * @brief Game Model
  *
  */
@@ -16,6 +16,8 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     this->_gameLevel = 1;
     this->_PacmanSpeed = LEVEL_1_SPEED;
     this->_GhostsSpeed = LEVEL_1_SPEED;
+    _score = 0;
+    _lives = 3;
 
     // Animation needs 15 extra miliseconds to finish and be ready for the next movement
     GhostTimer.setInterval(_GhostsSpeed + 15);
@@ -32,6 +34,7 @@ GameModel::GameModel(QObject *parent, gamepage *GameView)
     connect(this->_GameView, &gamepage::PacmanMoveFinished, this, &GameModel::KeepPacmanMoving);
     connect(this, &GameModel::ChangeGhostPositions, _GameView, &gamepage::updateGhostPositions);
     connect(this, &GameModel::Death, _GameView, &gamepage::PacManDeath);
+    connect(this, &GameModel::updateScore, _GameView, &gamepage::updateScore);
 
     srand(time(nullptr)); // seed randomized ghost movement
 
@@ -100,7 +103,7 @@ void GameModel::BuildMap(QString map)
     MapItems itemsPos = this->_Map->getMapItems();
     this->_Pacman = new Entity(itemsPos.startPos.first, itemsPos.startPos.second);
     logger.log("P " + to_string(_Pacman->x()) + " " + to_string(_Pacman->y()));
-    for (int i = 0; i < itemsPos.ghostsPos.size(); ++i) {
+    for (size_t i = 0; i < itemsPos.ghostsPos.size(); ++i) {
         auto &ghost = itemsPos.ghostsPos[i];
         Entity GhostModel(ghost.first, ghost.second);
         GhostModel.assignNumber(i);
@@ -240,6 +243,8 @@ void GameModel::_checkPosition(int x, int y)
     else if (item == 'T' && this->_keysPos.empty())
     {
         // Game ends
+        _score += 1;
+        emit updateScore(_score);
         emit ChangePage(GVPageCode::GAME_END);
     }
 }
@@ -316,6 +321,12 @@ void GameModel::MoveGhosts()
             emit Death();
 
             QTimer::singleShot(2000, this, [=]() {
+                _lives -= 1;
+                emit updateLives(_lives);
+                if (_lives == 0) {
+                    _score = 0;
+                    emit updateScore(_score);
+                }
                 MapItems itemsPos = this->_Map->getMapItems();
                 delete this->_Pacman;
                 this->_Pacman = new Entity(itemsPos.startPos.first, itemsPos.startPos.second);

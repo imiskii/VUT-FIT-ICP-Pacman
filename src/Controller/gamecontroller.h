@@ -57,48 +57,48 @@ protected:
 
 signals:
     /**
-     * @brief ChangeMVPage notify Main View to change page
+     * @brief notify Main View to change page
      * @param page page to change to
      */
     void ChangeMVPage(MVPageCode page);
     /**
-     * @brief ChangeGVPage notify Game View to change page
+     * @brief notify Game View to change page
      * @param page to change to
      */
     void ChangeGVPage(GVPageCode page);
     /**
-     * @brief ChangeRVPage notify Replay View to change page
+     * @brief notify Replay View to change page
      * @param page to change to
      */
     void ChangeRVPage(RVPageCode page);
     /**
-     * @brief QuitApp notify Main View to close the application
+     * @brief notify Main View to close the application
      */
     void QuitApp();
     /**
-     * @brief ChooseMapFile notify Game Model to choose the map file
+     * @brief notify Game Model to choose the map file
      */
     void ChooseMapFile();
     /**
-     * @brief ChooseReplayFile notify Replay Model to choose the replay file
+     * @brief notify Replay Model to choose the replay file
      */
     void ChooseReplayFile();
     /**
-     * @brief StartGame notify model to strat a new game
+     * @brief notify model to strat a new game
      * @param map map to be played
      */
     void StartGame(QString map);
     /**
-     * @brief MoveAction notify model that key that should force move action is pressed
+     * @brief notify model that key that should force move action is pressed
      * @param dr direction of movement that should be done
      */
     void MoveAction(direction dr);
     /**
-     * @brief ExitGame notify model to exit the game
+     * @brief notify model to exit the game
      */
     void ExitGame();
     /**
-     * @brief NextGame notify model to start a new game
+     * @brief notify model to start a new game
      */
     void NextGame();
 
@@ -106,22 +106,22 @@ signals:
 
 public slots:
     /**
-     * @brief MVHandleAction handling actions for Main View
+     * @brief handling actions for Main View
      * @param code code of action
      */
     void MVHandleAction(MVActionCode code);
     /**
-     * @brief GVHandleAction handling actions for Game View
+     * @brief handling actions for Game View
      * @param code
      */
     void GVHandleAction(GVActionCode code);
     /**
-     * @brief RVHandleAction handling actions for Replay View
+     * @brief handling actions for Replay View
      * @param code
      */
     void RVHandleAction(RVActionCode code);
     /**
-     * @brief PlayButtonAction handling signal to play the game
+     * @brief handling signal to play the game
      * @param choosenMap map choosen by user
      */
     void PlayButtonAction(QString choosenMap);

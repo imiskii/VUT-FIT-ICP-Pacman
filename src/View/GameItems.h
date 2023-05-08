@@ -63,6 +63,7 @@ class PacmanItem : public QObject, public QGraphicsEllipseItem
     Q_PROPERTY(int spanAngle READ spanAngle WRITE setSpanAngle)
 
 public:
+
     /**
      * @brief PacmanItem constructor
      * @param position position on graphics scene
@@ -71,19 +72,22 @@ public:
      */
     PacmanItem(QPointF position, qreal &width, qreal &height);
     ~PacmanItem();
+
     /**
-     * @brief moveTo move pacman on given destination position on map
+     * @brief move pacman on given destination position on map
      * @param destPos destination position on map
      * @param speed speed of moving
      * @param dr direction of movement
      */
     void moveTo(QPointF destPos, int speed, direction dr);
+
     /**
      * @brief DEATH_ANIMATION_SPEED constant value representing speed of pacman death animation in miliseconds
      */
     static const int DEATH_ANIMATION_SPEED = 1500;
+
     /**
-     * @brief deathAnimation starts pacman death animation
+     * @brief starts pacman death animation
      */
     void deathAnimation();
 
@@ -95,25 +99,25 @@ private:
     QPointF _prevPos;                            ///< last position before movement
     QPointF _nextPos;                            ///< last position where pacman wanted to move
     /**
-     * @brief _rotatePacman rotate pacman to given direction
+     * @brief rotate pacman to given direction
      * @param dr direction
      */
     void _rotatePacman(direction dr);
     /**
-     * @brief _mouthAnimation starts pacman mouth animation
+     * @brief starts pacman mouth animation
      * @param speed speed of animation
      */
     void _mouthAnimation(int speed);
 
 signals:
     /**
-     * @brief moveFinished signal to game view that pacman movement was finished
+     * @brief signal to game view that pacman movement was finished
      */
     void moveFinished();
 
 private slots:
     /**
-     * @brief moveAnimationFinished handeling pacman movement animation
+     * @brief handling pacman movement animation
      */
     void moveAnimationFinished();
 
@@ -139,8 +143,9 @@ public:
      */
     GhostItem(QPixmap &pixmap, QPointF position, qreal &width, qreal &height, QGraphicsPixmapItem *parent = nullptr);
     ~GhostItem();
+
     /**
-     * @brief moveTo move ghost on given destination position on map
+     * @brief move ghost on given destination position on map
      * @param destPos destination position on map
      * @param speed speed of moving
      * @param dr direction of movement

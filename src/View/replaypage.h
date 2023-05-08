@@ -1,6 +1,6 @@
 /**
  * @file replaypage.h
- * @author
+ * @author Michal Las (xlasmi00)
  * @brief header file for replaypage.cpp
  *
  */
@@ -59,7 +59,7 @@ private:
 
 signals:
     /**
-     * @brief NotifyUserAction Notify controller about acctions in GameView
+     * @brief Notify controller about acctions in GameView
      * @param code code of action
      */
     void NotifyUserAction(RVActionCode code);
@@ -71,12 +71,12 @@ signals:
 
 public slots:
     /**
-     * @brief MoveOnPage Change page of application
+     * @brief Change page of application
      * @param page code of the page where apllication should move
      */
     void MoveOnPage(RVPageCode page);
     /**
-     * @brief AddReplayName add new replay name to combobox
+     * @brief add new replay name to combobox
      * @param replayName name of new replay
      */
     void AddReplayName(QString replayName);

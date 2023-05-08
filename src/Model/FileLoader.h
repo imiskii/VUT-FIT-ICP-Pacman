@@ -2,7 +2,7 @@
  * @file FileLoader.h
  * @author Michal Ľaš (xlasmi00)
  * @brief header file for FileLoader.cpp
- * 
+ *
  */
 
 #ifndef FILELOADER_H
@@ -20,7 +20,7 @@
 using namespace std;
 
 /**
- * @brief LoadFileNamesFromDir Lead file names from given directory that have given file extension
+ * @brief Load file names from given directory that have given file extension
  * @param dirPath path to directory with files
  * @param fileExt extension of file that
  * @return vector of strings with file names that have given file extension
@@ -29,7 +29,7 @@ vector<string> LoadFileNamesFromDir(const char *dirPath, const char *fileExt);
 
 
 /**
- * @brief ReadLinesFromFile Function read lines from given file
+ * @brief read lines from given file
  * @param fileLines reference to vector where lines will be read
  * @param path path to file from which lines will be read
  * @return True if reading was successful else return False

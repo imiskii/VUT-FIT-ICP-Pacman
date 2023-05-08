@@ -1,6 +1,6 @@
 /**
  * @file GameModel.h
- * @author Michal Ľaš (xlasmi00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazik (xlazik00)
  * @brief header file for GameModel.cpp
  *
  */
@@ -46,89 +46,137 @@ private:
     vector<pair<int, int>> _keysPos;///< positions of keys in map
     QTimer GhostTimer;              ///< timer controlling ghost movement
     Logger logger;                  ///< for logging games
+    int _score;                     ///< counting player score
+    int _lives;                     ///< player lives
 
     /**
-     * @brief _setNewPosition update given position (x,y) based on given direction
+     * @brief update given position (x,y) based on given direction
      * @param dr direction
      * @param x reference to x position
      * @param y reference to y position
      */
     void _setNewPosition(direction dr, int &x, int &y);
+
     /**
-     * @brief _checkPosition check if on given position is key or target point. If there is key or target point it call next actions
+     * @brief check if on given position is key or target point. If there is key or target point it call next actions
      * @param x position
      * @param y position
      */
     void _checkPosition(int x, int y);
+
+    /**
+     * @brief determine free positions next to specified
+     * position. Free positions are considered those without a wall.
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return vector<pair<int, int>> vector of free neighboring positions
+     */
     vector<pair<int, int>> GetFreeNeighbors(int x, int y);
 
 signals:
     /**
-     * @brief AddMapNameToCombobox notify View to update combobox with available maps
+     * @brief notify View to update combobox with available maps
      * @param mapFile name of map
      */
     void AddMapNameToCombobox(QString mapFile);
+
     /**
-     * @brief DisplayMap notify View to display game field
+     * @brief notify View to display game field
      * @param gameField 2D array - representation of game field
      */
     void DisplayMap(std::vector<std::vector<char>> &gameField);
+
     /**
-     * @brief DisplayMessage notify view to display message
+     * @brief notify view to display message
      * @param msg Message to be displayed
      */
     void DisplayMessage(QString msg);
+
     /**
-     * @brief DisplayPage notify Game View to change page
+     * @brief notify Game View to change page
      * @param page to change to
      */
     void ChangePage(GVPageCode page);
+
     /**
-     * @brief ChangePacmanPosition notify Game View to change pacman position on map
+     * @brief notify Game View to change pacman position on map
      * @param dr direction where should pacman move
      */
     void ChangePacmanPosition(direction dr, int speed);
+
     /**
-     * @brief NextMove continue in next/currnet pacman movement
+     * @brief continue in next/currnet pacman movement
      * @param dr direction where should pacman move
      */
-
     void ChangeGhostPositions(vector<pair<int, int>> &newpos, int speed);
 
-    void NextMove(direction dr);
     /**
-     * @brief KeyCollected notify Game View that KeyItem with given index was collected
+     * @brief signal next pacman move
+     * @param dr move direction
+     */
+    void NextMove(direction dr);
+
+    /**
+     * @brief notify Game View that KeyItem with given index was collected
      * @param index index of collected item
      */
     void KeyCollected(int index);
+
     /**
-     * @brief DeleteMap notify Game View to delete current scene
+     * @brief notify Game View to delete current scene
      */
     void DeleteMap();
 
+    /**
+     * @brief signal PacMan encounter with a ghost
+     */
     void Death();
 
-public slots:
     /**
-     * @brief SelectMapFile open File Dialog to choose map file and notify view to display it
+     * @brief update currently achieved score
+     * @param score new score
+     */
+    void updateScore(int score);
+
+    void updateLives(int Lives);
+
+public slots:
+
+    /**
+     * @brief open File Dialog to choose map file and notify view to display it
      */
     void SelectMapFile();
+
     /**
-     * @brief BuildMap Load given map and notify View to display it
+     * @brief Load given map and notify View to display it
      * @param map map to be loaded
      */
     void BuildMap(QString map);
+
     /**
-     * @brief MovePacman move pacman object to given direction
+     * @brief move pacman object to given direction
      * @param dr direction where should pacman move
      */
     void MovePacman(direction dr);
+
     /**
-     * @brief KeepPacmanMoving call another move signal for pacman if last pacman movement was finished
+     * @brief call another move signal for pacman if last pacman movement was finished
      */
     void KeepPacmanMoving();
+
+    /**
+     * @brief leave the current game
+     */
     void LeaveGame();
+
+    /**
+     * @brief proceed to the next level (same map, higher entity speed)
+     */
     void GoOnNextLevel();
+
+    /**
+     * @brief Determine new positions for ghosts
+     */
     void MoveGhosts();
 };
 

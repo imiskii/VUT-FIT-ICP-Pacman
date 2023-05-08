@@ -1,6 +1,6 @@
 /**
  * @file gamepage.h
- * @author Michal Ľaš (xlasmi00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazik (xlazik00)
  * @brief header file for gamepage.cpp
  */
 
@@ -75,103 +75,138 @@ private:
 
 protected:
     /**
-     * @brief resizeEvent override of QWidget resizeEvent
+     * @brief override of QWidget resizeEvent
      * @param event
      */
     void resizeEvent(QResizeEvent* event) override;
+
     /**
-     * @brief updateSceneItemsSize resize all items in QGraphicsView
+     * @brief resize all items in QGraphicsView
      * @param newSize new size of items in QGraphicsView
      */
     void updateSceneItemsSize();
 
 
 signals:
+
     /**
-     * @brief PlayButtonClicked Notify controller that player want to play a game
+     * @brief Notify controller that player want to play a game
      * @param choosenMap name of map selected by user
      */
     void PlayButtonClicked(QString choosenMap);
+
     /**
-     * @brief NotifyUserAction Notify controller about acctions in GameView
+     * @brief Notify controller about acctions in GameView
      * @param code code of action
      */
     void NotifyUserAction(GVActionCode code);
+
     /**
-     * @brief GoOnHomePage signal to change page on home page
+     * @brief signal to change page on home page
      */
     void GoOnHomePage();
+
     /**
-     * @brief MoveFinished notify Model that pacman movement was finished
+     * @brief notify Model that pacman movement was finished
      */
     void PacmanMoveFinished();
 
 
 public slots:
+
     /**
-     * @brief MoveOnPage Change page of application
+     * @brief Change page of application
      * @param page code of the page where apllication should move
      */
     void MoveOnPage(GVPageCode page);
+
     /**
-     * @brief AddMapFile Add new map name to combobox
+     * @brief Add new map name to combobox
      * @param mapFile name of new map
      */
     void AddMapName(QString mapName);
+
     /**
-     * @brief ShowGameField Create new game field and add it to scene
+     * @brief Create new game field and add it to scene
      * @param gameField 2D array representing game field
      */
     void ShowGameField(std::vector<std::vector<char>> &gameField);
+
     /**
-     * @brief ShowMessage Show message in game lobby
+     * @brief Show message in game lobby
      * @param msg Message that will be displayed
      */
     void ShowMessage(QString msg);
+
     /**
-     * @brief UpdatePacmanPosition update position of pacman object on scene
+     * @brief update position of pacman object on scene
      * @param dr direction of new pacman position
      */
     void UpdatePacmanPosition(direction dr, int speed);
+
     /**
-     * @brief PacmanMovementFinished handeling signal from PacmanItem that animation of movement was finished
+     * @brief handling signal from PacmanItem that animation of movement was finished
      */
     void PacmanMovementFinished();
+
     /**
-     * @brief deleteKeyFromMap delete KeyItem from map on given index
+     * @brief delete KeyItem from map on given index
      * @param index index of KeyItem
      */
     void deleteKeyFromMap(int index);
+
     /**
-     * @brief deleteScene delete current displayed scene
+     * @brief delete current displayed scene
      */
     void deleteScene();
 
+    /**
+     * @brief update positions of ghosts on map
+     * @param newpos vector of new ghost positions
+     * @param speed speed at which the ghosts should move
+     */
     void updateGhostPositions(vector<pair<int, int>> &newpos, int speed);
 
+    /**
+     * @brief play PacMan death animation
+     */
     void PacManDeath();
 
+    /**
+     * @brief update currently achieved score
+     * @param number new score
+     */
+    void updateScore(int number);
+
+    void updateLives(int number);
+
 private slots:
+
     /**
      * @brief on_GameBackButton_clicked sends signal to Controller that 'Back' button was clicked
      */
     void on_GameBackButton_clicked();
+
     /**
      * @brief on_PlayButton_clicked sends signal to Controller that 'PLAY' button was clicked
      */
     void on_PlayButton_clicked();
+
     /**
      * @brief on_GameExitButton_clicked sends signal to Controller that 'Exit' button was clicked
      */
     void on_GameExitButton_clicked();
+
     /**
      * @brief on_EndContinueButton_clicked sends signal to Controller that 'Exit' button was clicked
      */
     void on_ExitGameButton_clicked();
+
     /**
      * @brief on_ChooseMapFileButton_clicked sends signal to Controller that 'Choose Map' button was clicked
      */
     void on_ChooseMapFileButton_clicked();
+
     /**
      * @brief on_NextGame_clicked sends signal to Controller that 'NEXT LEVEL' button was clicked
      */

@@ -1,8 +1,8 @@
 /**
  * @file ReplayModel.cpp
- * @author 
+ * @author Michal Las (xlasmi00)
  * @brief Replay Model
- * 
+ *
  */
 
 #include "ReplayModel.h"

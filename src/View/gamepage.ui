@@ -384,7 +384,7 @@
             <enum>Qt::LeftToRight</enum>
            </property>
            <property name="text">
-            <string>Game Result</string>
+            <string>Your Score:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>

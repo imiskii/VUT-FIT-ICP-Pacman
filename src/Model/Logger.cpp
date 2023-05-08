@@ -1,5 +1,10 @@
+/**
+ * @file Logger.cpp
+ * @author Adam Lazik (xlazik00)
+ * @brief Implementation of logger class for logging games.
+ */
+
 #include "Logger.h"
-#include <iostream>
 
 Logger::~Logger()
 {

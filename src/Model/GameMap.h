@@ -37,46 +37,54 @@ class GameMap
 public:
     GameMap();
     ~GameMap();
+
     /**
-     * @brief loadMap load and process game map
+     * @brief load and process game map
      * @param fileLines reference to vector with loaded lines from map file
      * @return True if map was successfuly loaded or False if map file is corrupted
      */
     bool loadMap(vector<string> &fileLines, string mapName);
+
     /**
-     * @brief getCols getter for count of map field columns
+     * @brief getter for count of map field columns
      * @return number of map columns
      */
     int getCols() const;
+
     /**
-     * @brief getRows getter for count of map field rows
+     * @brief getter for count of map field rows
      * @return number of map rows
      */
     int getRows() const;
+
     /**
-     * @brief getMapField getter for map field
+     * @brief getter for map field
      * @return 2D array - map field
      */
     vector<vector<char>> &getMapField();
+
     /**
-     * @brief getMapItems get positions of items in map
+     * @brief get positions of items in map
      * @return structure with positions of items in map
      */
     MapItems &getMapItems();
+
     /**
-     * @brief getMapName getter for attribute mapName
+     * @brief get map name
      * @return name of map that was loaded
      */
     string getMapName();
+
     /**
-     * @brief isWall check if on given position of field is wall
+     * @brief check if on given position of field is wall
      * @param x column
      * @param y row
      * @return True if there is wall or False if there is something else or given position is out of map field
      */
     bool isWall(int x, int y);
+
     /**
-     * @brief isOnPosition check what is on given position
+     * @brief check what is on given position
      * @param x column
      * @param y row
      * @return character that represents item on given position if given position is out of map field it returns space char (' ')

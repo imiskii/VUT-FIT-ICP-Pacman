@@ -1,6 +1,6 @@
 /**
  * @file gamepage.cpp
- * @author Michal Ľaš (xlasmi00)
+ * @author Michal Ľaš (xlasmi00), Adam Lazik (xlazik00)
  * @brief Game View
  *
  */
@@ -209,7 +209,7 @@ void gamepage::PacManDeath()
 
 void gamepage::updateGhostPositions(vector<pair<int, int>> &newpos, int speed)
 {
-    for(int i = 0; i < newpos.size(); ++i)
+    for(size_t i = 0; i < newpos.size(); ++i)
     {
         _ghosts[i]->moveTo(QPointF(_cellSize * newpos[i].first,_cellSize * newpos[i].second), speed);
     }
@@ -279,5 +279,15 @@ void gamepage::deleteScene()
     this->_target = nullptr;
 }
 
+void gamepage::updateScore(int number)
+{
+    ui->ScoreNumberCounter->display(number);
+    ui->EndGameScore->display(number);
+}
+
+void gamepage::updateLives(int number)
+{
+   ui->LivesLabel->setText(QString::fromStdString("Lives: " + to_string(number)));
+}
 
 /* END OF FILE */

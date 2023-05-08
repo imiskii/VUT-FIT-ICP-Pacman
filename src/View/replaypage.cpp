@@ -1,6 +1,6 @@
 /**
  * @file replaypage.cpp
- * @author
+ * @author Michal Las (xlasmi00)
  * @brief Replay view
  *
  */

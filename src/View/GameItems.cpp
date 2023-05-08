@@ -165,6 +165,12 @@ void PacmanItem::deathAnimation()
     this->_mouthSpanAnimation->setDuration(this->DEATH_ANIMATION_SPEED);
     this->_mouthStartAnimation->start();
     this->_mouthSpanAnimation->start();
+
+    // restore animation direction
+    this->_mouthStartAnimation->setDirection(QAbstractAnimation::Backward);
+    this->_mouthSpanAnimation->setDirection(QAbstractAnimation::Backward);
+    this->_mouthStartAnimation->setEndValue(0);
+    this->_mouthSpanAnimation->setEndValue(360 * 16);
 }
 
 

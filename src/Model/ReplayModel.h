@@ -1,8 +1,8 @@
 /**
  * @file ReplayModel.h
- * @author
+ * @author Michal Las (xlasmi00)
  * @brief header file for ReplayModel.cpp
- * 
+ *
  */
 
 #ifndef REPLAYMODEL_H
@@ -28,7 +28,7 @@ private:
 
 signals:
     /**
-     * @brief AddReplayToCombobox notify View to update combobox with available replays
+     * @brief notify View to update combobox with available replays
      * @param replayName name of replay
      */
     void AddReplayToCombobox(QString replayName);
@@ -36,7 +36,7 @@ signals:
 
 public slots:
     /**
-     * @brief SelectReplayFile open File Dialog to choose replay file and notify view to display it
+     * @brief open File Dialog to choose replay file and notify view to display it
      */
     void SelectReplayFile();
 
