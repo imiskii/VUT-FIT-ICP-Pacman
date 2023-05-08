@@ -73,20 +73,6 @@ protected:
     qreal _cellSize;                    ///< Size of one cell in GraphicView
 
 
-protected:
-    /**
-     * @brief override of QWidget resizeEvent
-     * @param event
-     */
-    void resizeEvent(QResizeEvent* event) override;
-
-    /**
-     * @brief resize all items in QGraphicsView
-     * @param newSize new size of items in QGraphicsView
-     */
-    void updateSceneItemsSize();
-
-
 signals:
 
     /**

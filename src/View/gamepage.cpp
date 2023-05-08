@@ -37,49 +37,6 @@ gamepage::~gamepage()
 }
 
 
-void gamepage::resizeEvent(QResizeEvent *event)
-{
-    QWidget::resizeEvent(event);
-
-    this->updateSceneItemsSize();
-}
-
-
-void gamepage::updateSceneItemsSize()
-{
-    QGraphicsScene* scene = ui->GameGraphicsView->scene();
-    if (scene != nullptr)
-    {
-        // get pointer to QGraphicsScene
-        qreal newCellSize;
-        // Calculate new size of cell
-        if (this->_mapRowCount < this->_mapColumnCount) // adjust scene for width
-        {
-            newCellSize = (ui->GameGraphicsView->width()-1)/this->_mapColumnCount; // scene width / count columns
-        }
-        else // adjust scene for height
-        {
-            newCellSize = (ui->GameGraphicsView->height()-1)/this->_mapRowCount; // scene height / count rows
-        }
-        qreal newScale = newCellSize / this->_cellSize;
-        this->_cellSize = newCellSize;
-        // iterate through items in scene and change thier sizes
-        foreach(QGraphicsItem *item, scene->items())
-        {
-            // if it is QGraphicsPixmapItem adjust scale for them
-            QGraphicsPixmapItem *pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
-            if (pixmapItem)
-            {
-                item->setPos(item->pos().x() * newScale, item->pos().y() * newScale);
-                item->setScale(pixmapItem->scale() * newScale);
-                continue;
-            }
-            item->setScale(newScale);
-        }
-    }
-}
-
-
 void gamepage::MoveOnPage(GVPageCode page)
 {
     switch (page) {
@@ -112,6 +69,7 @@ void gamepage::AddMapName(QString mapName)
 
 void gamepage::ShowGameField(std::vector<std::vector<char>> &gameField)
 {
+    // Get size of game field
     this->_mapRowCount = gameField.size();
     this->_mapColumnCount = gameField.at(0).size();
     // Calculate size of one cell
