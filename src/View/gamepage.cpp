@@ -16,6 +16,8 @@ gamepage::gamepage(QWidget *parent) :
 
     this->_scene = new QGraphicsScene(ui->GameGraphicsView);
 
+    ui->GameGraphicsView->setFocusPolicy(Qt::NoFocus);
+
     this->_pacman = nullptr;
     this->_cellSize = 0;
 }

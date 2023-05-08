@@ -73,19 +73,15 @@ void GameController::_KeyPressEvent(QKeyEvent *event)
     switch (event->key())
     {
     case Qt::Key_W:
-    case Qt::Key_Up:
         emit MoveAction(direction::UP);
         break;
     case Qt::Key_A:
-    case Qt::Key_Left:
         emit MoveAction(direction::LEFT);
         break;
     case Qt::Key_S:
-    case Qt::Key_Down:
         emit MoveAction(direction::DOWN);
         break;
     case Qt::Key_D:
-    case Qt::Key_Right:
         emit MoveAction(direction::RIGHT);
         break;
     default:
@@ -124,9 +120,11 @@ void GameController::GVHandleAction(GVActionCode code)
         emit NextGame();
         break;
     case GVActionCode::CLICKED_BUTTON_BACK:
+        _GameView->clearFocus();
         emit ChangeGVPage(GVPageCode::HOME);
         break;
     case GVActionCode::CLICKED_BUTTON_CHOOSEMAP:
+        _GameView->setFocus();
         emit ChooseMapFile();
         break;
     default:

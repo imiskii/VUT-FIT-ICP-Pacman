@@ -72,7 +72,6 @@ protected:
     TargetItem *_target;                ///< Target item
     qreal _cellSize;                    ///< Size of one cell in GraphicView
 
-
 signals:
 
     /**
@@ -164,6 +163,10 @@ public slots:
      */
     void updateScore(int number);
 
+    /**
+     * @brief update player lives
+     * @param number new lives
+     */
     void updateLives(int number);
 
 private slots:

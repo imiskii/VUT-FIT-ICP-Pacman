@@ -38,7 +38,10 @@ replaypage::~replaypage()
 {
     delete ui;
     delete _scene;
-    if (_pacman != nullptr);
+    if (_pacman != nullptr)
+    {
+        delete _pacman;
+    }
 }
 
 
