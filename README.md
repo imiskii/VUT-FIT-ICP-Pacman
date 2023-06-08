@@ -29,5 +29,7 @@ Michal Ľaš (xlasmi00)
 
 ## Game
   
-  
-<img src="doc/images/game-photo.png">
+
+<div align="center">
+    <img src="doc/images/game-photo.png">
+</div>
